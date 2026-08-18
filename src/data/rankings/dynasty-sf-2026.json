@@ -1,0 +1,4366 @@
+{
+  "schemaVersion": 1,
+  "provenance": {
+    "source": "Flock Fantasy",
+    "sourceUrl": "https://api.flockfantasy.com/rankings?format=SUPERFLEX&pickType=general",
+    "format": "dynasty-sf",
+    "season": 2026,
+    "retrievedAt": "2026-08-18T21:24:38.178Z",
+    "upstreamFormat": "SUPERFLEX",
+    "upstreamLastUpdated": "2026-08-18 19:48:11.845",
+    "playerCount": 439,
+    "notes": "Public unauthenticated consensus endpoint; response reported subscribed=false."
+  },
+  "players": [
+    {
+      "id": "flock-4984",
+      "name": "Josh Allen",
+      "position": "QB",
+      "team": "BUF",
+      "baseRank": 1,
+      "tier": 1,
+      "byeWeek": 7,
+      "age": 30
+    },
+    {
+      "id": "flock-9221",
+      "name": "Jahmyr Gibbs",
+      "position": "RB",
+      "team": "DET",
+      "baseRank": 2,
+      "tier": 1,
+      "byeWeek": 6,
+      "age": 24
+    },
+    {
+      "id": "flock-9509",
+      "name": "Bijan Robinson",
+      "position": "RB",
+      "team": "ATL",
+      "baseRank": 3,
+      "tier": 1,
+      "byeWeek": 11,
+      "age": 24
+    },
+    {
+      "id": "flock-11564",
+      "name": "Drake Maye",
+      "position": "QB",
+      "team": "NE",
+      "baseRank": 4,
+      "tier": 1,
+      "byeWeek": 11,
+      "age": 23
+    },
+    {
+      "id": "flock-7564",
+      "name": "Ja'Marr Chase",
+      "position": "WR",
+      "team": "CIN",
+      "baseRank": 5,
+      "tier": 1,
+      "byeWeek": 6,
+      "age": 26
+    },
+    {
+      "id": "flock-9488",
+      "name": "Jaxon Smith-Njigba",
+      "position": "WR",
+      "team": "SEA",
+      "baseRank": 6,
+      "tier": 1,
+      "byeWeek": 11,
+      "age": 24
+    },
+    {
+      "id": "flock-9493",
+      "name": "Puka Nacua",
+      "position": "WR",
+      "team": "LAR",
+      "baseRank": 7,
+      "tier": 2,
+      "byeWeek": 11,
+      "age": 25
+    },
+    {
+      "id": "flock-11566",
+      "name": "Jayden Daniels",
+      "position": "QB",
+      "team": "WAS",
+      "baseRank": 8,
+      "tier": 2,
+      "byeWeek": 7,
+      "age": 25
+    },
+    {
+      "id": "flock-4881",
+      "name": "Lamar Jackson",
+      "position": "QB",
+      "team": "BAL",
+      "baseRank": 9,
+      "tier": 2,
+      "byeWeek": 13,
+      "age": 29
+    },
+    {
+      "id": "flock-7547",
+      "name": "Amon-Ra St. Brown",
+      "position": "WR",
+      "team": "DET",
+      "baseRank": 10,
+      "tier": 2,
+      "byeWeek": 6,
+      "age": 26
+    },
+    {
+      "id": "flock-11632",
+      "name": "Malik Nabers",
+      "position": "WR",
+      "team": "NYG",
+      "baseRank": 11,
+      "tier": 2,
+      "byeWeek": 8,
+      "age": 23
+    },
+    {
+      "id": "flock-11560",
+      "name": "Caleb Williams",
+      "position": "QB",
+      "team": "CHI",
+      "baseRank": 12,
+      "tier": 2,
+      "byeWeek": 10,
+      "age": 24
+    },
+    {
+      "id": "flock-12527",
+      "name": "Ashton Jeanty",
+      "position": "RB",
+      "team": "LV",
+      "baseRank": 13,
+      "tier": 2,
+      "byeWeek": 13,
+      "age": 22
+    },
+    {
+      "id": "flock-13242",
+      "name": "Jeremiyah Love",
+      "position": "RB",
+      "team": "ARI",
+      "baseRank": 14,
+      "tier": 2,
+      "byeWeek": 14,
+      "age": 21
+    },
+    {
+      "id": "flock-6794",
+      "name": "Justin Jefferson",
+      "position": "WR",
+      "team": "MIN",
+      "baseRank": 15,
+      "tier": 3,
+      "byeWeek": 6,
+      "age": 27
+    },
+    {
+      "id": "flock-11604",
+      "name": "Brock Bowers",
+      "position": "TE",
+      "team": "LV",
+      "baseRank": 16,
+      "tier": 3,
+      "byeWeek": 13,
+      "age": 23
+    },
+    {
+      "id": "flock-6786",
+      "name": "CeeDee Lamb",
+      "position": "WR",
+      "team": "DAL",
+      "baseRank": 17,
+      "tier": 3,
+      "byeWeek": 14,
+      "age": 27
+    },
+    {
+      "id": "flock-6770",
+      "name": "Joe Burrow",
+      "position": "QB",
+      "team": "CIN",
+      "baseRank": 18,
+      "tier": 3,
+      "byeWeek": 6,
+      "age": 29
+    },
+    {
+      "id": "flock-8112",
+      "name": "Drake London",
+      "position": "WR",
+      "team": "ATL",
+      "baseRank": 19,
+      "tier": 3,
+      "byeWeek": 11,
+      "age": 25
+    },
+    {
+      "id": "flock-12507",
+      "name": "Omarion Hampton",
+      "position": "RB",
+      "team": "LAC",
+      "baseRank": 20,
+      "tier": 3,
+      "byeWeek": 7,
+      "age": 23
+    },
+    {
+      "id": "flock-8130",
+      "name": "Trey McBride",
+      "position": "TE",
+      "team": "ARI",
+      "baseRank": 21,
+      "tier": 3,
+      "byeWeek": 14,
+      "age": 26
+    },
+    {
+      "id": "flock-4046",
+      "name": "Patrick Mahomes",
+      "position": "QB",
+      "team": "KC",
+      "baseRank": 22,
+      "tier": 3,
+      "byeWeek": 5,
+      "age": 30
+    },
+    {
+      "id": "flock-12526",
+      "name": "Tetairoa McMillan",
+      "position": "WR",
+      "team": "CAR",
+      "baseRank": 23,
+      "tier": 3,
+      "byeWeek": 5,
+      "age": 23
+    },
+    {
+      "id": "flock-9226",
+      "name": "Devon Achane",
+      "position": "RB",
+      "team": "MIA",
+      "baseRank": 24,
+      "tier": 3,
+      "byeWeek": 6,
+      "age": 24
+    },
+    {
+      "id": "flock-6797",
+      "name": "Justin Herbert",
+      "position": "QB",
+      "team": "LAC",
+      "baseRank": 25,
+      "tier": 3,
+      "byeWeek": 7,
+      "age": 28
+    },
+    {
+      "id": "flock-7523",
+      "name": "Trevor Lawrence",
+      "position": "QB",
+      "team": "JAX",
+      "baseRank": 26,
+      "tier": 4,
+      "byeWeek": 7,
+      "age": 26
+    },
+    {
+      "id": "flock-8137",
+      "name": "George Pickens",
+      "position": "WR",
+      "team": "DAL",
+      "baseRank": 27,
+      "tier": 4,
+      "byeWeek": 14,
+      "age": 25
+    },
+    {
+      "id": "flock-13265",
+      "name": "Carnell Tate",
+      "position": "WR",
+      "team": "TEN",
+      "baseRank": 28,
+      "tier": 4,
+      "byeWeek": 9,
+      "age": 21
+    },
+    {
+      "id": "flock-12517",
+      "name": "Colston Loveland",
+      "position": "TE",
+      "team": "CHI",
+      "baseRank": 29,
+      "tier": 4,
+      "byeWeek": 10,
+      "age": 22
+    },
+    {
+      "id": "flock-6904",
+      "name": "Jalen Hurts",
+      "position": "QB",
+      "team": "PHI",
+      "baseRank": 30,
+      "tier": 4,
+      "byeWeek": 10,
+      "age": 28
+    },
+    {
+      "id": "flock-11563",
+      "name": "Bo Nix",
+      "position": "QB",
+      "team": "DEN",
+      "baseRank": 31,
+      "tier": 4,
+      "byeWeek": 10,
+      "age": 26
+    },
+    {
+      "id": "flock-12508",
+      "name": "Jaxson Dart",
+      "position": "QB",
+      "team": "NYG",
+      "baseRank": 32,
+      "tier": 5,
+      "byeWeek": 8,
+      "age": 23
+    },
+    {
+      "id": "flock-8183",
+      "name": "Brock Purdy",
+      "position": "QB",
+      "team": "SF",
+      "baseRank": 33,
+      "tier": 5,
+      "byeWeek": 8,
+      "age": 26
+    },
+    {
+      "id": "flock-12514",
+      "name": "Emeka Egbuka",
+      "position": "WR",
+      "team": "TB",
+      "baseRank": 34,
+      "tier": 5,
+      "byeWeek": 10,
+      "age": 23
+    },
+    {
+      "id": "flock-10229",
+      "name": "Rashee Rice",
+      "position": "WR",
+      "team": "KC",
+      "baseRank": 35,
+      "tier": 5,
+      "byeWeek": 5,
+      "age": 26
+    },
+    {
+      "id": "flock-8138",
+      "name": "James Cook",
+      "position": "RB",
+      "team": "BUF",
+      "baseRank": 36,
+      "tier": 5,
+      "byeWeek": 7,
+      "age": 26
+    },
+    {
+      "id": "flock-6813",
+      "name": "Jonathan Taylor",
+      "position": "RB",
+      "team": "IND",
+      "baseRank": 37,
+      "tier": 5,
+      "byeWeek": 13,
+      "age": 27
+    },
+    {
+      "id": "flock-8144",
+      "name": "Chris Olave",
+      "position": "WR",
+      "team": "NO",
+      "baseRank": 38,
+      "tier": 5,
+      "byeWeek": 8,
+      "age": 26
+    },
+    {
+      "id": "flock-7569",
+      "name": "Nico Collins",
+      "position": "WR",
+      "team": "HOU",
+      "baseRank": 39,
+      "tier": 5,
+      "byeWeek": 8,
+      "age": 27
+    },
+    {
+      "id": "flock-8146",
+      "name": "Garrett Wilson",
+      "position": "WR",
+      "team": "NYJ",
+      "baseRank": 40,
+      "tier": 5,
+      "byeWeek": 13,
+      "age": 26
+    },
+    {
+      "id": "flock-8151",
+      "name": "Kenneth Walker",
+      "position": "RB",
+      "team": "KC",
+      "baseRank": 41,
+      "tier": 5,
+      "byeWeek": 5,
+      "age": 25
+    },
+    {
+      "id": "flock-11635",
+      "name": "Ladd McConkey",
+      "position": "WR",
+      "team": "LAC",
+      "baseRank": 42,
+      "tier": 5,
+      "byeWeek": 7,
+      "age": 24
+    },
+    {
+      "id": "flock-13264",
+      "name": "Jordyn Tyson",
+      "position": "WR",
+      "team": "NO",
+      "baseRank": 43,
+      "tier": 5,
+      "byeWeek": 8,
+      "age": 22
+    },
+    {
+      "id": "flock-12519",
+      "name": "Luther Burden",
+      "position": "WR",
+      "team": "CHI",
+      "baseRank": 44,
+      "tier": 5,
+      "byeWeek": 10,
+      "age": 22
+    },
+    {
+      "id": "flock-13266",
+      "name": "Makai Lemon",
+      "position": "WR",
+      "team": "PHI",
+      "baseRank": 45,
+      "tier": 6,
+      "byeWeek": 10,
+      "age": 22
+    },
+    {
+      "id": "flock-13229",
+      "name": "Fernando Mendoza",
+      "position": "QB",
+      "team": "LV",
+      "baseRank": 46,
+      "tier": 6,
+      "byeWeek": 13,
+      "age": 22
+    },
+    {
+      "id": "flock-12518",
+      "name": "Tyler Warren",
+      "position": "TE",
+      "team": "IND",
+      "baseRank": 47,
+      "tier": 6,
+      "byeWeek": 13,
+      "age": 24
+    },
+    {
+      "id": "flock-9224",
+      "name": "Chase Brown",
+      "position": "RB",
+      "team": "CIN",
+      "baseRank": 48,
+      "tier": 6,
+      "byeWeek": 6,
+      "age": 26
+    },
+    {
+      "id": "flock-8155",
+      "name": "Breece Hall",
+      "position": "RB",
+      "team": "NYJ",
+      "baseRank": 49,
+      "tier": 6,
+      "byeWeek": 13,
+      "age": 25
+    },
+    {
+      "id": "flock-12512",
+      "name": "Quinshon Judkins",
+      "position": "RB",
+      "team": "CLE",
+      "baseRank": 50,
+      "tier": 6,
+      "byeWeek": 11,
+      "age": 22
+    },
+    {
+      "id": "flock-3294",
+      "name": "Dak Prescott",
+      "position": "QB",
+      "team": "DAL",
+      "baseRank": 51,
+      "tier": 6,
+      "byeWeek": 14,
+      "age": 33
+    },
+    {
+      "id": "flock-13244",
+      "name": "Jadarian Price",
+      "position": "RB",
+      "team": "SEA",
+      "baseRank": 52,
+      "tier": 6,
+      "byeWeek": 11,
+      "age": 22
+    },
+    {
+      "id": "flock-12529",
+      "name": "TreVeyon Henderson",
+      "position": "RB",
+      "team": "NE",
+      "baseRank": 53,
+      "tier": 6,
+      "byeWeek": 11,
+      "age": 23
+    },
+    {
+      "id": "flock-9997",
+      "name": "Zay Flowers",
+      "position": "WR",
+      "team": "BAL",
+      "baseRank": 54,
+      "tier": 6,
+      "byeWeek": 13,
+      "age": 25
+    },
+    {
+      "id": "flock-11620",
+      "name": "Rome Odunze",
+      "position": "WR",
+      "team": "CHI",
+      "baseRank": 55,
+      "tier": 6,
+      "byeWeek": 10,
+      "age": 24
+    },
+    {
+      "id": "flock-6804",
+      "name": "Jordan Love",
+      "position": "QB",
+      "team": "GB",
+      "baseRank": 56,
+      "tier": 7,
+      "byeWeek": 11,
+      "age": 27
+    },
+    {
+      "id": "flock-3163",
+      "name": "Jared Goff",
+      "position": "QB",
+      "team": "DET",
+      "baseRank": 57,
+      "tier": 7,
+      "byeWeek": 6,
+      "age": 31
+    },
+    {
+      "id": "flock-11631",
+      "name": "Brian Thomas",
+      "position": "WR",
+      "team": "JAX",
+      "baseRank": 58,
+      "tier": 7,
+      "byeWeek": 7,
+      "age": 23
+    },
+    {
+      "id": "flock-4034",
+      "name": "Christian McCaffrey",
+      "position": "RB",
+      "team": "SF",
+      "baseRank": 59,
+      "tier": 7,
+      "byeWeek": 8,
+      "age": 30
+    },
+    {
+      "id": "flock-7525",
+      "name": "DeVonta Smith",
+      "position": "WR",
+      "team": "PHI",
+      "baseRank": 60,
+      "tier": 7,
+      "byeWeek": 10,
+      "age": 27
+    },
+    {
+      "id": "flock-6801",
+      "name": "Tee Higgins",
+      "position": "WR",
+      "team": "CIN",
+      "baseRank": 61,
+      "tier": 7,
+      "byeWeek": 6,
+      "age": 27
+    },
+    {
+      "id": "flock-12481",
+      "name": "Cam Skattebo",
+      "position": "RB",
+      "team": "NYG",
+      "baseRank": 62,
+      "tier": 7,
+      "byeWeek": 8,
+      "age": 24
+    },
+    {
+      "id": "flock-12506",
+      "name": "Harold Fannin",
+      "position": "TE",
+      "team": "CLE",
+      "baseRank": 63,
+      "tier": 7,
+      "byeWeek": 11,
+      "age": 22
+    },
+    {
+      "id": "flock-9484",
+      "name": "Tucker Kraft",
+      "position": "TE",
+      "team": "GB",
+      "baseRank": 64,
+      "tier": 7,
+      "byeWeek": 11,
+      "age": 25
+    },
+    {
+      "id": "flock-11628",
+      "name": "Marvin Harrison",
+      "position": "WR",
+      "team": "ARI",
+      "baseRank": 65,
+      "tier": 7,
+      "byeWeek": 14,
+      "age": 24
+    },
+    {
+      "id": "flock-5859",
+      "name": "A.J. Brown",
+      "position": "WR",
+      "team": "NE",
+      "baseRank": 66,
+      "tier": 7,
+      "byeWeek": 11,
+      "age": 29
+    },
+    {
+      "id": "flock-8150",
+      "name": "Kyren Williams",
+      "position": "RB",
+      "team": "LAR",
+      "baseRank": 67,
+      "tier": 7,
+      "byeWeek": 11,
+      "age": 25
+    },
+    {
+      "id": "flock-11584",
+      "name": "Bucky Irving",
+      "position": "RB",
+      "team": "TB",
+      "baseRank": 68,
+      "tier": 7,
+      "byeWeek": 10,
+      "age": 23
+    },
+    {
+      "id": "flock-4866",
+      "name": "Saquon Barkley",
+      "position": "RB",
+      "team": "PHI",
+      "baseRank": 69,
+      "tier": 7,
+      "byeWeek": 10,
+      "age": 29
+    },
+    {
+      "id": "flock-12522",
+      "name": "Cam Ward",
+      "position": "QB",
+      "team": "TEN",
+      "baseRank": 70,
+      "tier": 7,
+      "byeWeek": 9,
+      "age": 24
+    },
+    {
+      "id": "flock-7588",
+      "name": "Javonte Williams",
+      "position": "RB",
+      "team": "DAL",
+      "baseRank": 71,
+      "tier": 7,
+      "byeWeek": 14,
+      "age": 26
+    },
+    {
+      "id": "flock-4892",
+      "name": "Baker Mayfield",
+      "position": "QB",
+      "team": "TB",
+      "baseRank": 72,
+      "tier": 8,
+      "byeWeek": 10,
+      "age": 31
+    },
+    {
+      "id": "flock-2025013",
+      "name": "Tyler Shough",
+      "position": "QB",
+      "team": "NO",
+      "baseRank": 73,
+      "tier": 8,
+      "byeWeek": 8,
+      "age": 26
+    },
+    {
+      "id": "flock-7526",
+      "name": "Jaylen Waddle",
+      "position": "WR",
+      "team": "DEN",
+      "baseRank": 74,
+      "tier": 8,
+      "byeWeek": 10,
+      "age": 27
+    },
+    {
+      "id": "flock-8148",
+      "name": "Jameson Williams",
+      "position": "WR",
+      "team": "DET",
+      "baseRank": 75,
+      "tier": 8,
+      "byeWeek": 6,
+      "age": 25
+    },
+    {
+      "id": "flock-5849",
+      "name": "Kyler Murray",
+      "position": "QB",
+      "team": "MIN",
+      "baseRank": 76,
+      "tier": 8,
+      "byeWeek": 6,
+      "age": 29
+    },
+    {
+      "id": "flock-9758",
+      "name": "C.J. Stroud",
+      "position": "QB",
+      "team": "HOU",
+      "baseRank": 77,
+      "tier": 8,
+      "byeWeek": 8,
+      "age": 24
+    },
+    {
+      "id": "flock-7543",
+      "name": "Travis Etienne",
+      "position": "RB",
+      "team": "NO",
+      "baseRank": 78,
+      "tier": 8,
+      "byeWeek": 8,
+      "age": 27
+    },
+    {
+      "id": "flock-12490",
+      "name": "Bhayshul Tuten",
+      "position": "RB",
+      "team": "JAX",
+      "baseRank": 79,
+      "tier": 8,
+      "byeWeek": 7,
+      "age": 23
+    },
+    {
+      "id": "flock-13268",
+      "name": "KC Concepcion",
+      "position": "WR",
+      "team": "CLE",
+      "baseRank": 80,
+      "tier": 8,
+      "byeWeek": 11,
+      "age": 21
+    },
+    {
+      "id": "flock-13308",
+      "name": "Kenyon Sadiq",
+      "position": "TE",
+      "team": "NYJ",
+      "baseRank": 81,
+      "tier": 8,
+      "byeWeek": 13,
+      "age": 21
+    },
+    {
+      "id": "flock-5850",
+      "name": "Josh Jacobs",
+      "position": "RB",
+      "team": "GB",
+      "baseRank": 82,
+      "tier": 8,
+      "byeWeek": 11,
+      "age": 28
+    },
+    {
+      "id": "flock-10859",
+      "name": "Sam LaPorta",
+      "position": "TE",
+      "team": "DET",
+      "baseRank": 83,
+      "tier": 8,
+      "byeWeek": 6,
+      "age": 25
+    },
+    {
+      "id": "flock-7553",
+      "name": "Kyle Pitts",
+      "position": "TE",
+      "team": "ATL",
+      "baseRank": 84,
+      "tier": 9,
+      "byeWeek": 11,
+      "age": 25
+    },
+    {
+      "id": "flock-4943",
+      "name": "Sam Darnold",
+      "position": "QB",
+      "team": "SEA",
+      "baseRank": 85,
+      "tier": 9,
+      "byeWeek": 11,
+      "age": 29
+    },
+    {
+      "id": "flock-9756",
+      "name": "Jordan Addison",
+      "position": "WR",
+      "team": "MIN",
+      "baseRank": 86,
+      "tier": 9,
+      "byeWeek": 6,
+      "age": 24
+    },
+    {
+      "id": "flock-13277",
+      "name": "Omar Cooper Jr.",
+      "position": "WR",
+      "team": "NYJ",
+      "baseRank": 87,
+      "tier": 9,
+      "byeWeek": 13,
+      "age": 22
+    },
+    {
+      "id": "flock-3198",
+      "name": "Derrick Henry",
+      "position": "RB",
+      "team": "BAL",
+      "baseRank": 88,
+      "tier": 9,
+      "byeWeek": 13,
+      "age": 32
+    },
+    {
+      "id": "flock-12530",
+      "name": "Travis Hunter",
+      "position": "WR",
+      "team": "JAX",
+      "baseRank": 89,
+      "tier": 9,
+      "byeWeek": 7,
+      "age": 23
+    },
+    {
+      "id": "flock-6790",
+      "name": "D'Andre Swift",
+      "position": "RB",
+      "team": "CHI",
+      "baseRank": 90,
+      "tier": 9,
+      "byeWeek": 10,
+      "age": 27
+    },
+    {
+      "id": "flock-8142",
+      "name": "Alec Pierce",
+      "position": "WR",
+      "team": "IND",
+      "baseRank": 91,
+      "tier": 9,
+      "byeWeek": 13,
+      "age": 26
+    },
+    {
+      "id": "flock-4983",
+      "name": "DJ Moore",
+      "position": "WR",
+      "team": "BUF",
+      "baseRank": 92,
+      "tier": 9,
+      "byeWeek": 7,
+      "age": 29
+    },
+    {
+      "id": "flock-8167",
+      "name": "Christian Watson",
+      "position": "WR",
+      "team": "GB",
+      "baseRank": 93,
+      "tier": 9,
+      "byeWeek": 11,
+      "age": 27
+    },
+    {
+      "id": "flock-5870",
+      "name": "Daniel Jones",
+      "position": "QB",
+      "team": "IND",
+      "baseRank": 94,
+      "tier": 9,
+      "byeWeek": 13,
+      "age": 29
+    },
+    {
+      "id": "flock-10232",
+      "name": "Michael Wilson",
+      "position": "WR",
+      "team": "ARI",
+      "baseRank": 95,
+      "tier": 9,
+      "byeWeek": 14,
+      "age": 26
+    },
+    {
+      "id": "flock-5927",
+      "name": "Terry McLaurin",
+      "position": "WR",
+      "team": "WAS",
+      "baseRank": 96,
+      "tier": 9,
+      "byeWeek": 7,
+      "age": 30
+    },
+    {
+      "id": "flock-9228",
+      "name": "Bryce Young",
+      "position": "QB",
+      "team": "CAR",
+      "baseRank": 97,
+      "tier": 9,
+      "byeWeek": 5,
+      "age": 25
+    },
+    {
+      "id": "flock-2133",
+      "name": "Davante Adams",
+      "position": "WR",
+      "team": "LAR",
+      "baseRank": 98,
+      "tier": 9,
+      "byeWeek": 11,
+      "age": 33
+    },
+    {
+      "id": "flock-13231",
+      "name": "Ty Simpson",
+      "position": "QB",
+      "team": "LAR",
+      "baseRank": 99,
+      "tier": 9,
+      "byeWeek": 11,
+      "age": 23
+    },
+    {
+      "id": "flock-5892",
+      "name": "David Montgomery",
+      "position": "RB",
+      "team": "HOU",
+      "baseRank": 100,
+      "tier": 9,
+      "byeWeek": 8,
+      "age": 29
+    },
+    {
+      "id": "flock-421",
+      "name": "Matthew Stafford",
+      "position": "QB",
+      "team": "LAR",
+      "baseRank": 101,
+      "tier": 9,
+      "byeWeek": 11,
+      "age": 38
+    },
+    {
+      "id": "flock-12493",
+      "name": "Oronde Gadsden",
+      "position": "TE",
+      "team": "LAC",
+      "baseRank": 102,
+      "tier": 10,
+      "byeWeek": 7,
+      "age": 23
+    },
+    {
+      "id": "flock-8161",
+      "name": "Malik Willis",
+      "position": "QB",
+      "team": "MIA",
+      "baseRank": 103,
+      "tier": 10,
+      "byeWeek": 6,
+      "age": 27
+    },
+    {
+      "id": "flock-13267",
+      "name": "Denzel Boston",
+      "position": "WR",
+      "team": "CLE",
+      "baseRank": 104,
+      "tier": 10,
+      "byeWeek": 11,
+      "age": 22
+    },
+    {
+      "id": "flock-2216",
+      "name": "Mike Evans",
+      "position": "WR",
+      "team": "SF",
+      "baseRank": 105,
+      "tier": 10,
+      "byeWeek": 8,
+      "age": 32
+    },
+    {
+      "id": "flock-6819",
+      "name": "Michael Pittman",
+      "position": "WR",
+      "team": "PIT",
+      "baseRank": 106,
+      "tier": 10,
+      "byeWeek": 9,
+      "age": 28
+    },
+    {
+      "id": "flock-8126",
+      "name": "Wan'Dale Robinson",
+      "position": "WR",
+      "team": "TEN",
+      "baseRank": 107,
+      "tier": 10,
+      "byeWeek": 9,
+      "age": 25
+    },
+    {
+      "id": "flock-9754",
+      "name": "Quentin Johnston",
+      "position": "WR",
+      "team": "LAC",
+      "baseRank": 108,
+      "tier": 10,
+      "byeWeek": 7,
+      "age": 24
+    },
+    {
+      "id": "flock-13243",
+      "name": "Jonah Coleman",
+      "position": "RB",
+      "team": "DEN",
+      "baseRank": 109,
+      "tier": 10,
+      "byeWeek": 10,
+      "age": 22
+    },
+    {
+      "id": "flock-5846",
+      "name": "DK Metcalf",
+      "position": "WR",
+      "team": "PIT",
+      "baseRank": 110,
+      "tier": 10,
+      "byeWeek": 9,
+      "age": 28
+    },
+    {
+      "id": "flock-9500",
+      "name": "Josh Downs",
+      "position": "WR",
+      "team": "IND",
+      "baseRank": 111,
+      "tier": 10,
+      "byeWeek": 13,
+      "age": 25
+    },
+    {
+      "id": "flock-4217",
+      "name": "George Kittle",
+      "position": "TE",
+      "team": "SF",
+      "baseRank": 112,
+      "tier": 10,
+      "byeWeek": 8,
+      "age": 32
+    },
+    {
+      "id": "flock-12489",
+      "name": "RJ Harvey",
+      "position": "RB",
+      "team": "DEN",
+      "baseRank": 113,
+      "tier": 10,
+      "byeWeek": 10,
+      "age": 25
+    },
+    {
+      "id": "flock-11624",
+      "name": "Xavier Worthy",
+      "position": "WR",
+      "team": "KC",
+      "baseRank": 114,
+      "tier": 10,
+      "byeWeek": 5,
+      "age": 23
+    },
+    {
+      "id": "flock-9487",
+      "name": "Parker Washington",
+      "position": "WR",
+      "team": "JAX",
+      "baseRank": 115,
+      "tier": 10,
+      "byeWeek": 7,
+      "age": 24
+    },
+    {
+      "id": "flock-8228",
+      "name": "Jaylen Warren",
+      "position": "RB",
+      "team": "PIT",
+      "baseRank": 116,
+      "tier": 10,
+      "byeWeek": 9,
+      "age": 27
+    },
+    {
+      "id": "flock-13312",
+      "name": "Eli Stowers",
+      "position": "TE",
+      "team": "PHI",
+      "baseRank": 117,
+      "tier": 10,
+      "byeWeek": 10,
+      "age": 23
+    },
+    {
+      "id": "flock-11583",
+      "name": "Jonathon Brooks",
+      "position": "RB",
+      "team": "CAR",
+      "baseRank": 118,
+      "tier": 11,
+      "byeWeek": 5,
+      "age": 23
+    },
+    {
+      "id": "flock-10236",
+      "name": "Dalton Kincaid",
+      "position": "TE",
+      "team": "BUF",
+      "baseRank": 119,
+      "tier": 11,
+      "byeWeek": 7,
+      "age": 26
+    },
+    {
+      "id": "flock-12501",
+      "name": "Matthew Golden",
+      "position": "WR",
+      "team": "GB",
+      "baseRank": 120,
+      "tier": 11,
+      "byeWeek": 11,
+      "age": 23
+    },
+    {
+      "id": "flock-12484",
+      "name": "Jayden Higgins",
+      "position": "WR",
+      "team": "HOU",
+      "baseRank": 121,
+      "tier": 11,
+      "byeWeek": 8,
+      "age": 23
+    },
+    {
+      "id": "flock-11638",
+      "name": "Ricky Pearsall",
+      "position": "WR",
+      "team": "SF",
+      "baseRank": 122,
+      "tier": 11,
+      "byeWeek": 8,
+      "age": 25
+    },
+    {
+      "id": "flock-2025001",
+      "name": "Kyle Monangai",
+      "position": "RB",
+      "team": "CHI",
+      "baseRank": 123,
+      "tier": 11,
+      "byeWeek": 10,
+      "age": 24
+    },
+    {
+      "id": "flock-7594",
+      "name": "Chuba Hubbard",
+      "position": "RB",
+      "team": "CAR",
+      "baseRank": 124,
+      "tier": 11,
+      "byeWeek": 5,
+      "age": 27
+    },
+    {
+      "id": "flock-8131",
+      "name": "Isaiah Likely",
+      "position": "TE",
+      "team": "NYG",
+      "baseRank": 125,
+      "tier": 11,
+      "byeWeek": 8,
+      "age": 26
+    },
+    {
+      "id": "flock-10222",
+      "name": "Jayden Reed",
+      "position": "WR",
+      "team": "GB",
+      "baseRank": 126,
+      "tier": 11,
+      "byeWeek": 11,
+      "age": 26
+    },
+    {
+      "id": "flock-8110",
+      "name": "Jake Ferguson",
+      "position": "TE",
+      "team": "DAL",
+      "baseRank": 127,
+      "tier": 11,
+      "byeWeek": 14,
+      "age": 27
+    },
+    {
+      "id": "flock-4037",
+      "name": "Chris Godwin",
+      "position": "WR",
+      "team": "TB",
+      "baseRank": 128,
+      "tier": 11,
+      "byeWeek": 10,
+      "age": 30
+    },
+    {
+      "id": "flock-5045",
+      "name": "Courtland Sutton",
+      "position": "WR",
+      "team": "DEN",
+      "baseRank": 129,
+      "tier": 11,
+      "byeWeek": 10,
+      "age": 30
+    },
+    {
+      "id": "flock-5947",
+      "name": "Jakobi Meyers",
+      "position": "WR",
+      "team": "JAX",
+      "baseRank": 130,
+      "tier": 11,
+      "byeWeek": 7,
+      "age": 29
+    },
+    {
+      "id": "flock-11646",
+      "name": "Jalen Coker",
+      "position": "WR",
+      "team": "CAR",
+      "baseRank": 131,
+      "tier": 11,
+      "byeWeek": 5,
+      "age": 24
+    },
+    {
+      "id": "flock-8136",
+      "name": "Rachaad White",
+      "position": "RB",
+      "team": "WAS",
+      "baseRank": 132,
+      "tier": 11,
+      "byeWeek": 7,
+      "age": 27
+    },
+    {
+      "id": "flock-11586",
+      "name": "Blake Corum",
+      "position": "RB",
+      "team": "LAR",
+      "baseRank": 133,
+      "tier": 12,
+      "byeWeek": 11,
+      "age": 25
+    },
+    {
+      "id": "flock-8121",
+      "name": "Romeo Doubs",
+      "position": "WR",
+      "team": "NE",
+      "baseRank": 134,
+      "tier": 12,
+      "byeWeek": 11,
+      "age": 26
+    },
+    {
+      "id": "flock-7021",
+      "name": "Rico Dowdle",
+      "position": "RB",
+      "team": "PIT",
+      "baseRank": 135,
+      "tier": 12,
+      "byeWeek": 9,
+      "age": 28
+    },
+    {
+      "id": "flock-7611",
+      "name": "Rhamondre Stevenson",
+      "position": "RB",
+      "team": "NE",
+      "baseRank": 136,
+      "tier": 12,
+      "byeWeek": 11,
+      "age": 28
+    },
+    {
+      "id": "flock-9480",
+      "name": "Brenton Strange",
+      "position": "TE",
+      "team": "JAX",
+      "baseRank": 137,
+      "tier": 12,
+      "byeWeek": 7,
+      "age": 25
+    },
+    {
+      "id": "flock-13271",
+      "name": "Germie Bernard",
+      "position": "WR",
+      "team": "PIT",
+      "baseRank": 138,
+      "tier": 12,
+      "byeWeek": 9,
+      "age": 22
+    },
+    {
+      "id": "flock-7567",
+      "name": "Kenneth Gainwell",
+      "position": "RB",
+      "team": "TB",
+      "baseRank": 139,
+      "tier": 12,
+      "byeWeek": 10,
+      "age": 27
+    },
+    {
+      "id": "flock-5967",
+      "name": "Tony Pollard",
+      "position": "RB",
+      "team": "TEN",
+      "baseRank": 140,
+      "tier": 12,
+      "byeWeek": 9,
+      "age": 29
+    },
+    {
+      "id": "flock-9753",
+      "name": "Zach Charbonnet",
+      "position": "RB",
+      "team": "SEA",
+      "baseRank": 141,
+      "tier": 12,
+      "byeWeek": 11,
+      "age": 25
+    },
+    {
+      "id": "flock-12533",
+      "name": "Jacory Croskey-Merritt",
+      "position": "RB",
+      "team": "WAS",
+      "baseRank": 142,
+      "tier": 12,
+      "byeWeek": 7,
+      "age": 25
+    },
+    {
+      "id": "flock-6768",
+      "name": "Tua Tagovailoa",
+      "position": "QB",
+      "team": "ATL",
+      "baseRank": 143,
+      "tier": 12,
+      "byeWeek": 11,
+      "age": 28
+    },
+    {
+      "id": "flock-6806",
+      "name": "J.K. Dobbins",
+      "position": "RB",
+      "team": "DEN",
+      "baseRank": 144,
+      "tier": 12,
+      "byeWeek": 10,
+      "age": 27
+    },
+    {
+      "id": "flock-11559",
+      "name": "Michael Penix",
+      "position": "QB",
+      "team": "ATL",
+      "baseRank": 145,
+      "tier": 12,
+      "byeWeek": 11,
+      "age": 26
+    },
+    {
+      "id": "flock-8132",
+      "name": "Tyler Allgeier",
+      "position": "RB",
+      "team": "ARI",
+      "baseRank": 146,
+      "tier": 12,
+      "byeWeek": 14,
+      "age": 26
+    },
+    {
+      "id": "flock-13275",
+      "name": "Antonio Williams",
+      "position": "WR",
+      "team": "WAS",
+      "baseRank": 147,
+      "tier": 12,
+      "byeWeek": 7,
+      "age": 22
+    },
+    {
+      "id": "flock-13269",
+      "name": "Chris Bell",
+      "position": "WR",
+      "team": "MIA",
+      "baseRank": 148,
+      "tier": 12,
+      "byeWeek": 6,
+      "age": 22
+    },
+    {
+      "id": "flock-10219",
+      "name": "Chris Rodriguez",
+      "position": "RB",
+      "team": "JAX",
+      "baseRank": 149,
+      "tier": 12,
+      "byeWeek": 7,
+      "age": 26
+    },
+    {
+      "id": "flock-11618",
+      "name": "Jalen McMillan",
+      "position": "WR",
+      "team": "TB",
+      "baseRank": 150,
+      "tier": 12,
+      "byeWeek": 10,
+      "age": 24
+    },
+    {
+      "id": "flock-13245",
+      "name": "Nicholas Singleton",
+      "position": "RB",
+      "team": "TEN",
+      "baseRank": 151,
+      "tier": 12,
+      "byeWeek": 9,
+      "age": 22
+    },
+    {
+      "id": "flock-11655",
+      "name": "Tyrone Tracy",
+      "position": "RB",
+      "team": "NYG",
+      "baseRank": 152,
+      "tier": 12,
+      "byeWeek": 8,
+      "age": 26
+    },
+    {
+      "id": "flock-8408",
+      "name": "Jordan Mason",
+      "position": "RB",
+      "team": "MIN",
+      "baseRank": 153,
+      "tier": 12,
+      "byeWeek": 6,
+      "age": 27
+    },
+    {
+      "id": "flock-12264",
+      "name": "Cole Beck",
+      "position": "WR",
+      "team": "FA",
+      "baseRank": 154,
+      "tier": 12,
+      "age": 29
+    },
+    {
+      "id": "flock-13305",
+      "name": "De'Zhaun Stribling",
+      "position": "WR",
+      "team": "SF",
+      "baseRank": 155,
+      "tier": 12,
+      "byeWeek": 8,
+      "age": 23
+    },
+    {
+      "id": "flock-13272",
+      "name": "Elijah Sarratt",
+      "position": "WR",
+      "team": "BAL",
+      "baseRank": 156,
+      "tier": 12,
+      "byeWeek": 13,
+      "age": 23
+    },
+    {
+      "id": "flock-8134",
+      "name": "Khalil Shakir",
+      "position": "WR",
+      "team": "BUF",
+      "baseRank": 157,
+      "tier": 12,
+      "byeWeek": 7,
+      "age": 26
+    },
+    {
+      "id": "flock-13236",
+      "name": "Drew Allar",
+      "position": "QB",
+      "team": "PIT",
+      "baseRank": 158,
+      "tier": 12,
+      "byeWeek": 9,
+      "age": 22
+    },
+    {
+      "id": "flock-12474",
+      "name": "Woody Marks",
+      "position": "RB",
+      "team": "HOU",
+      "baseRank": 159,
+      "tier": 12,
+      "byeWeek": 8,
+      "age": 25
+    },
+    {
+      "id": "flock-8210",
+      "name": "Chig Okonkwo",
+      "position": "TE",
+      "team": "WAS",
+      "baseRank": 160,
+      "tier": 12,
+      "byeWeek": 7,
+      "age": 26
+    },
+    {
+      "id": "flock-5022",
+      "name": "Dallas Goedert",
+      "position": "TE",
+      "team": "PHI",
+      "baseRank": 161,
+      "tier": 12,
+      "byeWeek": 10,
+      "age": 31
+    },
+    {
+      "id": "flock-13235",
+      "name": "Carson Beck",
+      "position": "QB",
+      "team": "ARI",
+      "baseRank": 162,
+      "tier": 12,
+      "byeWeek": 14,
+      "age": 23
+    },
+    {
+      "id": "flock-8676",
+      "name": "Rashid Shaheed",
+      "position": "WR",
+      "team": "SEA",
+      "baseRank": 163,
+      "tier": 12,
+      "byeWeek": 11,
+      "age": 27
+    },
+    {
+      "id": "flock-5012",
+      "name": "Mark Andrews",
+      "position": "TE",
+      "team": "BAL",
+      "baseRank": 164,
+      "tier": 12,
+      "byeWeek": 13,
+      "age": 30
+    },
+    {
+      "id": "flock-7049",
+      "name": "Jauan Jennings",
+      "position": "WR",
+      "team": "MIN",
+      "baseRank": 165,
+      "tier": 12,
+      "byeWeek": 6,
+      "age": 29
+    },
+    {
+      "id": "flock-5844",
+      "name": "T.J. Hockenson",
+      "position": "TE",
+      "team": "MIN",
+      "baseRank": 166,
+      "tier": 12,
+      "byeWeek": 6,
+      "age": 29
+    },
+    {
+      "id": "flock-4199",
+      "name": "Aaron Jones",
+      "position": "RB",
+      "team": "MIN",
+      "baseRank": 167,
+      "tier": 12,
+      "byeWeek": 6,
+      "age": 31
+    },
+    {
+      "id": "flock-11603",
+      "name": "AJ Barner",
+      "position": "TE",
+      "team": "SEA",
+      "baseRank": 168,
+      "tier": 12,
+      "byeWeek": 11,
+      "age": 24
+    },
+    {
+      "id": "flock-12469",
+      "name": "Dylan Sampson",
+      "position": "RB",
+      "team": "CLE",
+      "baseRank": 169,
+      "tier": 12,
+      "byeWeek": 11,
+      "age": 21
+    },
+    {
+      "id": "flock-13309",
+      "name": "Max Klare",
+      "position": "TE",
+      "team": "LAR",
+      "baseRank": 170,
+      "tier": 12,
+      "byeWeek": 11,
+      "age": 23
+    },
+    {
+      "id": "flock-8205",
+      "name": "Isiah Pacheco",
+      "position": "RB",
+      "team": "DET",
+      "baseRank": 171,
+      "tier": 12,
+      "byeWeek": 6,
+      "age": 27
+    },
+    {
+      "id": "flock-13246",
+      "name": "Kaytron Allen",
+      "position": "RB",
+      "team": "WAS",
+      "baseRank": 172,
+      "tier": 12,
+      "byeWeek": 7,
+      "age": 23
+    },
+    {
+      "id": "flock-2025008",
+      "name": "Jaylin Noel",
+      "position": "WR",
+      "team": "HOU",
+      "baseRank": 173,
+      "tier": 12,
+      "byeWeek": 8,
+      "age": 23
+    },
+    {
+      "id": "flock-13274",
+      "name": "Zachariah Branch",
+      "position": "WR",
+      "team": "ATL",
+      "baseRank": 174,
+      "tier": 12,
+      "byeWeek": 11,
+      "age": 22
+    },
+    {
+      "id": "flock-12524",
+      "name": "Shedeur Sanders",
+      "position": "QB",
+      "team": "CLE",
+      "baseRank": 175,
+      "tier": 12,
+      "byeWeek": 11,
+      "age": 24
+    },
+    {
+      "id": "flock-5872",
+      "name": "Deebo Samuel",
+      "position": "WR",
+      "team": "SF",
+      "baseRank": 176,
+      "tier": 12,
+      "byeWeek": 8,
+      "age": 30
+    },
+    {
+      "id": "flock-6803",
+      "name": "Brandon Aiyuk",
+      "position": "WR",
+      "team": "SF",
+      "baseRank": 177,
+      "tier": 12,
+      "byeWeek": 8,
+      "age": 28
+    },
+    {
+      "id": "flock-11627",
+      "name": "Troy Franklin",
+      "position": "WR",
+      "team": "DEN",
+      "baseRank": 178,
+      "tier": 12,
+      "byeWeek": 10,
+      "age": 23
+    },
+    {
+      "id": "flock-9508",
+      "name": "Tyjae Spears",
+      "position": "RB",
+      "team": "TEN",
+      "baseRank": 179,
+      "tier": 12,
+      "byeWeek": 9,
+      "age": 25
+    },
+    {
+      "id": "flock-12487",
+      "name": "Terrance Ferguson",
+      "position": "TE",
+      "team": "LAR",
+      "baseRank": 180,
+      "tier": 12,
+      "byeWeek": 11,
+      "age": 23
+    },
+    {
+      "id": "flock-1466",
+      "name": "Travis Kelce",
+      "position": "TE",
+      "team": "KC",
+      "baseRank": 181,
+      "tier": 12,
+      "byeWeek": 5,
+      "age": 36
+    },
+    {
+      "id": "flock-13273",
+      "name": "Ja'Kobi Lane",
+      "position": "WR",
+      "team": "BAL",
+      "baseRank": 182,
+      "tier": 12,
+      "byeWeek": 13,
+      "age": 22
+    },
+    {
+      "id": "flock-13315",
+      "name": "Eli Raridon",
+      "position": "TE",
+      "team": "NE",
+      "baseRank": 183,
+      "tier": 12,
+      "byeWeek": 11,
+      "age": 22
+    },
+    {
+      "id": "flock-7527",
+      "name": "Mac Jones",
+      "position": "QB",
+      "team": "SF",
+      "baseRank": 184,
+      "tier": 12,
+      "byeWeek": 8,
+      "age": 27
+    },
+    {
+      "id": "flock-2449",
+      "name": "Stefon Diggs",
+      "position": "WR",
+      "team": "WAS",
+      "baseRank": 185,
+      "tier": 12,
+      "byeWeek": 7,
+      "age": 32
+    },
+    {
+      "id": "flock-13285",
+      "name": "Ted Hurst",
+      "position": "WR",
+      "team": "TB",
+      "baseRank": 186,
+      "tier": 12,
+      "byeWeek": 10,
+      "age": 22
+    },
+    {
+      "id": "flock-12502",
+      "name": "Gunnar Helm",
+      "position": "TE",
+      "team": "TEN",
+      "baseRank": 187,
+      "tier": 13,
+      "byeWeek": 9,
+      "age": 23
+    },
+    {
+      "id": "flock-12509",
+      "name": "Tre Harris",
+      "position": "WR",
+      "team": "LAC",
+      "baseRank": 188,
+      "tier": 13,
+      "byeWeek": 7,
+      "age": 24
+    },
+    {
+      "id": "flock-9504",
+      "name": "Kayshon Boutte",
+      "position": "WR",
+      "team": "NE",
+      "baseRank": 189,
+      "tier": 13,
+      "byeWeek": 11,
+      "age": 24
+    },
+    {
+      "id": "flock-13253",
+      "name": "Emmett Johnson",
+      "position": "RB",
+      "team": "KC",
+      "baseRank": 190,
+      "tier": 13,
+      "byeWeek": 5,
+      "age": 22
+    },
+    {
+      "id": "flock-12483",
+      "name": "Jack Bech",
+      "position": "WR",
+      "team": "LV",
+      "baseRank": 191,
+      "tier": 13,
+      "byeWeek": 13,
+      "age": 23
+    },
+    {
+      "id": "flock-8127",
+      "name": "Charlie Kolar",
+      "position": "TE",
+      "team": "LAC",
+      "baseRank": 192,
+      "tier": 13,
+      "byeWeek": 7,
+      "age": 27
+    },
+    {
+      "id": "flock-13270",
+      "name": "Chris Brazzell II",
+      "position": "WR",
+      "team": "CAR",
+      "baseRank": 193,
+      "tier": 13,
+      "byeWeek": 5,
+      "age": 22
+    },
+    {
+      "id": "flock-9225",
+      "name": "Tank Bigsby",
+      "position": "RB",
+      "team": "PHI",
+      "baseRank": 194,
+      "tier": 13,
+      "byeWeek": 10,
+      "age": 23
+    },
+    {
+      "id": "flock-11576",
+      "name": "Braelon Allen",
+      "position": "RB",
+      "team": "NYJ",
+      "baseRank": 195,
+      "tier": 13,
+      "byeWeek": 13,
+      "age": 22
+    },
+    {
+      "id": "flock-7002",
+      "name": "Juwan Johnson",
+      "position": "TE",
+      "team": "NO",
+      "baseRank": 196,
+      "tier": 13,
+      "byeWeek": 8,
+      "age": 29
+    },
+    {
+      "id": "flock-12535",
+      "name": "Isaac TeSlaa",
+      "position": "WR",
+      "team": "DET",
+      "baseRank": 197,
+      "tier": 13,
+      "byeWeek": 6,
+      "age": 24
+    },
+    {
+      "id": "flock-12497",
+      "name": "Tory Horton",
+      "position": "WR",
+      "team": "SEA",
+      "baseRank": 198,
+      "tier": 13,
+      "byeWeek": 11,
+      "age": 23
+    },
+    {
+      "id": "flock-4035",
+      "name": "Alvin Kamara",
+      "position": "RB",
+      "team": "NO",
+      "baseRank": 199,
+      "tier": 13,
+      "byeWeek": 8,
+      "age": 31
+    },
+    {
+      "id": "flock-12504",
+      "name": "Kaleb Johnson",
+      "position": "RB",
+      "team": "PIT",
+      "baseRank": 200,
+      "tier": 13,
+      "byeWeek": 9,
+      "age": 23
+    },
+    {
+      "id": "flock-13364",
+      "name": "Kaelon Black",
+      "position": "RB",
+      "team": "SF",
+      "baseRank": 201,
+      "tier": 13,
+      "byeWeek": 8,
+      "age": 24
+    },
+    {
+      "id": "flock-13247",
+      "name": "Demond Claiborne",
+      "position": "RB",
+      "team": "MIN",
+      "baseRank": 202,
+      "tier": 13,
+      "byeWeek": 6,
+      "age": 22
+    },
+    {
+      "id": "flock-6783",
+      "name": "Jerry Jeudy",
+      "position": "WR",
+      "team": "CLE",
+      "baseRank": 203,
+      "tier": 13,
+      "byeWeek": 11,
+      "age": 27
+    },
+    {
+      "id": "flock-12540",
+      "name": "Chimere Dike",
+      "position": "WR",
+      "team": "TEN",
+      "baseRank": 204,
+      "tier": 13,
+      "byeWeek": 9,
+      "age": 24
+    },
+    {
+      "id": "flock-3257",
+      "name": "Jacoby Brissett",
+      "position": "QB",
+      "team": "ARI",
+      "baseRank": 205,
+      "tier": 13,
+      "byeWeek": 14,
+      "age": 33
+    },
+    {
+      "id": "flock-12499",
+      "name": "Elic Ayomanor",
+      "position": "WR",
+      "team": "TEN",
+      "baseRank": 206,
+      "tier": 13,
+      "byeWeek": 9,
+      "age": 23
+    },
+    {
+      "id": "flock-11565",
+      "name": "J.J. McCarthy",
+      "position": "QB",
+      "team": "MIN",
+      "baseRank": 207,
+      "tier": 13,
+      "byeWeek": 6,
+      "age": 23
+    },
+    {
+      "id": "flock-1373",
+      "name": "Geno Smith",
+      "position": "QB",
+      "team": "NYJ",
+      "baseRank": 208,
+      "tier": 13,
+      "byeWeek": 13,
+      "age": 35
+    },
+    {
+      "id": "flock-11625",
+      "name": "Adonai Mitchell",
+      "position": "WR",
+      "team": "NYJ",
+      "baseRank": 209,
+      "tier": 13,
+      "byeWeek": 13,
+      "age": 23
+    },
+    {
+      "id": "flock-13280",
+      "name": "Malachi Fields",
+      "position": "WR",
+      "team": "NYG",
+      "baseRank": 210,
+      "tier": 14,
+      "byeWeek": 8,
+      "age": 22
+    },
+    {
+      "id": "flock-11637",
+      "name": "Keon Coleman",
+      "position": "WR",
+      "team": "BUF",
+      "baseRank": 211,
+      "tier": 14,
+      "byeWeek": 7,
+      "age": 23
+    },
+    {
+      "id": "flock-3214",
+      "name": "Hunter Henry",
+      "position": "TE",
+      "team": "NE",
+      "baseRank": 212,
+      "tier": 14,
+      "byeWeek": 11,
+      "age": 31
+    },
+    {
+      "id": "flock-8154",
+      "name": "Brian Robinson",
+      "position": "RB",
+      "team": "ATL",
+      "baseRank": 213,
+      "tier": 14,
+      "byeWeek": 11,
+      "age": 27
+    },
+    {
+      "id": "flock-13276",
+      "name": "Skyler Bell",
+      "position": "WR",
+      "team": "BUF",
+      "baseRank": 214,
+      "tier": 14,
+      "byeWeek": 7,
+      "age": 24
+    },
+    {
+      "id": "flock-4033",
+      "name": "David Njoku",
+      "position": "TE",
+      "team": "LAC",
+      "baseRank": 215,
+      "tier": 14,
+      "byeWeek": 7,
+      "age": 30
+    },
+    {
+      "id": "flock-10213",
+      "name": "Tre Tucker",
+      "position": "WR",
+      "team": "LV",
+      "baseRank": 216,
+      "tier": 14,
+      "byeWeek": 13,
+      "age": 25
+    },
+    {
+      "id": "flock-13262",
+      "name": "Mike Washington Jr.",
+      "position": "RB",
+      "team": "LV",
+      "baseRank": 217,
+      "tier": 14,
+      "byeWeek": 13,
+      "age": 23
+    },
+    {
+      "id": "flock-7600",
+      "name": "Pat Freiermuth",
+      "position": "TE",
+      "team": "PIT",
+      "baseRank": 218,
+      "tier": 14,
+      "byeWeek": 9,
+      "age": 27
+    },
+    {
+      "id": "flock-11610",
+      "name": "Malik Washington",
+      "position": "WR",
+      "team": "MIA",
+      "baseRank": 219,
+      "tier": 14,
+      "byeWeek": 6,
+      "age": 25
+    },
+    {
+      "id": "flock-3321",
+      "name": "Tyreek Hill",
+      "position": "WR",
+      "team": "FA",
+      "baseRank": 220,
+      "tier": 14,
+      "age": 31
+    },
+    {
+      "id": "flock-5001",
+      "name": "Dalton Schultz",
+      "position": "TE",
+      "team": "HOU",
+      "baseRank": 221,
+      "tier": 14,
+      "byeWeek": 8,
+      "age": 30
+    },
+    {
+      "id": "flock-9511",
+      "name": "Keaton Mitchell",
+      "position": "RB",
+      "team": "LAC",
+      "baseRank": 222,
+      "tier": 14,
+      "byeWeek": 7,
+      "age": 24
+    },
+    {
+      "id": "flock-12492",
+      "name": "Pat Bryant",
+      "position": "WR",
+      "team": "DEN",
+      "baseRank": 223,
+      "tier": 14,
+      "byeWeek": 10,
+      "age": 23
+    },
+    {
+      "id": "flock-96",
+      "name": "Aaron Rodgers",
+      "position": "QB",
+      "team": "PIT",
+      "baseRank": 224,
+      "tier": 14,
+      "byeWeek": 9,
+      "age": 42
+    },
+    {
+      "id": "flock-8111",
+      "name": "Cade Otton",
+      "position": "TE",
+      "team": "TB",
+      "baseRank": 225,
+      "tier": 14,
+      "byeWeek": 10,
+      "age": 27
+    },
+    {
+      "id": "flock-12485",
+      "name": "Tez Johnson",
+      "position": "WR",
+      "team": "TB",
+      "baseRank": 226,
+      "tier": 14,
+      "byeWeek": 10,
+      "age": 24
+    },
+    {
+      "id": "flock-12498",
+      "name": "Mason Taylor",
+      "position": "TE",
+      "team": "NYJ",
+      "baseRank": 227,
+      "tier": 14,
+      "byeWeek": 13,
+      "age": 22
+    },
+    {
+      "id": "flock-13299",
+      "name": "Caleb Douglas",
+      "position": "WR",
+      "team": "MIA",
+      "baseRank": 228,
+      "tier": 14,
+      "byeWeek": 6,
+      "age": 22
+    },
+    {
+      "id": "flock-8172",
+      "name": "Greg Dulcich",
+      "position": "TE",
+      "team": "MIA",
+      "baseRank": 229,
+      "tier": 14,
+      "byeWeek": 6,
+      "age": 26
+    },
+    {
+      "id": "flock-11589",
+      "name": "Trey Benson",
+      "position": "RB",
+      "team": "ARI",
+      "baseRank": 230,
+      "tier": 14,
+      "byeWeek": 14,
+      "age": 24
+    },
+    {
+      "id": "flock-4981",
+      "name": "Calvin Ridley",
+      "position": "WR",
+      "team": "TEN",
+      "baseRank": 231,
+      "tier": 14,
+      "byeWeek": 9,
+      "age": 31
+    },
+    {
+      "id": "flock-9229",
+      "name": "Anthony Richardson",
+      "position": "QB",
+      "team": "IND",
+      "baseRank": 232,
+      "tier": 14,
+      "byeWeek": 13,
+      "age": 24
+    },
+    {
+      "id": "flock-2025009",
+      "name": "Kyle Williams",
+      "position": "WR",
+      "team": "NE",
+      "baseRank": 233,
+      "tier": 14,
+      "byeWeek": 11,
+      "age": 23
+    },
+    {
+      "id": "flock-13311",
+      "name": "Oscar Delp",
+      "position": "TE",
+      "team": "NO",
+      "baseRank": 234,
+      "tier": 14,
+      "byeWeek": 8,
+      "age": 23
+    },
+    {
+      "id": "flock-4017",
+      "name": "Deshaun Watson",
+      "position": "QB",
+      "team": "CLE",
+      "baseRank": 235,
+      "tier": 14,
+      "byeWeek": 11,
+      "age": 30
+    },
+    {
+      "id": "flock-11597",
+      "name": "Theo Johnson",
+      "position": "TE",
+      "team": "NYG",
+      "baseRank": 236,
+      "tier": 14,
+      "byeWeek": 8,
+      "age": 25
+    },
+    {
+      "id": "flock-12471",
+      "name": "DJ Giddens",
+      "position": "RB",
+      "team": "IND",
+      "baseRank": 237,
+      "tier": 14,
+      "byeWeek": 13,
+      "age": 22
+    },
+    {
+      "id": "flock-13369",
+      "name": "Adam Randall",
+      "position": "RB",
+      "team": "BAL",
+      "baseRank": 238,
+      "tier": 14,
+      "byeWeek": 13,
+      "age": 22
+    },
+    {
+      "id": "flock-12521",
+      "name": "Elijah Arroyo",
+      "position": "TE",
+      "team": "SEA",
+      "baseRank": 239,
+      "tier": 14,
+      "byeWeek": 11,
+      "age": 23
+    },
+    {
+      "id": "flock-13316",
+      "name": "Justin Joly",
+      "position": "TE",
+      "team": "DEN",
+      "baseRank": 240,
+      "tier": 14,
+      "byeWeek": 10,
+      "age": 22
+    },
+    {
+      "id": "flock-7090",
+      "name": "Darnell Mooney",
+      "position": "WR",
+      "team": "NYG",
+      "baseRank": 241,
+      "tier": 14,
+      "byeWeek": 8,
+      "age": 28
+    },
+    {
+      "id": "flock-12467",
+      "name": "Jordan James",
+      "position": "RB",
+      "team": "SF",
+      "baseRank": 242,
+      "tier": 14,
+      "byeWeek": 8,
+      "age": 22
+    },
+    {
+      "id": "flock-11647",
+      "name": "Kimani Vidal",
+      "position": "RB",
+      "team": "LAC",
+      "baseRank": 243,
+      "tier": 14,
+      "byeWeek": 7,
+      "age": 24
+    },
+    {
+      "id": "flock-12476",
+      "name": "Devin Neal",
+      "position": "RB",
+      "team": "NO",
+      "baseRank": 244,
+      "tier": 14,
+      "byeWeek": 8,
+      "age": 23
+    },
+    {
+      "id": "flock-11575",
+      "name": "Ray Davis",
+      "position": "RB",
+      "team": "BUF",
+      "baseRank": 245,
+      "tier": 14,
+      "byeWeek": 7,
+      "age": 26
+    },
+    {
+      "id": "flock-4381",
+      "name": "Taysom Hill",
+      "position": "TE",
+      "team": "FA",
+      "baseRank": 246,
+      "tier": 14,
+      "age": 35
+    },
+    {
+      "id": "flock-7591",
+      "name": "Justin Fields",
+      "position": "QB",
+      "team": "KC",
+      "baseRank": 247,
+      "tier": 14,
+      "byeWeek": 5,
+      "age": 27
+    },
+    {
+      "id": "flock-9502",
+      "name": "Tank Dell",
+      "position": "WR",
+      "team": "HOU",
+      "baseRank": 248,
+      "tier": 14,
+      "byeWeek": 8,
+      "age": 26
+    },
+    {
+      "id": "flock-9482",
+      "name": "Michael Mayer",
+      "position": "TE",
+      "team": "LV",
+      "baseRank": 249,
+      "tier": 15,
+      "byeWeek": 13,
+      "age": 25
+    },
+    {
+      "id": "flock-4137",
+      "name": "James Conner",
+      "position": "RB",
+      "team": "ARI",
+      "baseRank": 250,
+      "tier": 15,
+      "byeWeek": 14,
+      "age": 31
+    },
+    {
+      "id": "flock-11626",
+      "name": "Xavier Legette",
+      "position": "WR",
+      "team": "CAR",
+      "baseRank": 251,
+      "tier": 15,
+      "byeWeek": 5,
+      "age": 25
+    },
+    {
+      "id": "flock-1166",
+      "name": "Kirk Cousins",
+      "position": "QB",
+      "team": "LV",
+      "baseRank": 252,
+      "tier": 15,
+      "byeWeek": 13,
+      "age": 37
+    },
+    {
+      "id": "flock-12457",
+      "name": "Jaydon Blue",
+      "position": "RB",
+      "team": "DAL",
+      "baseRank": 253,
+      "tier": 15,
+      "byeWeek": 14,
+      "age": 22
+    },
+    {
+      "id": "flock-13233",
+      "name": "Cade Klubnik",
+      "position": "QB",
+      "team": "NYJ",
+      "baseRank": 254,
+      "tier": 15,
+      "byeWeek": 13,
+      "age": 22
+    },
+    {
+      "id": "flock-13284",
+      "name": "Bryce Lance",
+      "position": "WR",
+      "team": "NO",
+      "baseRank": 255,
+      "tier": 15,
+      "byeWeek": 8,
+      "age": 23
+    },
+    {
+      "id": "flock-8180",
+      "name": "Jalen Nailor",
+      "position": "WR",
+      "team": "LV",
+      "baseRank": 256,
+      "tier": 15,
+      "byeWeek": 13,
+      "age": 27
+    },
+    {
+      "id": "flock-13314",
+      "name": "Jack Endries",
+      "position": "TE",
+      "team": "CIN",
+      "baseRank": 257,
+      "tier": 15,
+      "byeWeek": 6,
+      "age": 22
+    },
+    {
+      "id": "flock-1479",
+      "name": "Keenan Allen",
+      "position": "WR",
+      "team": "IND",
+      "baseRank": 258,
+      "tier": 15,
+      "byeWeek": 13,
+      "age": 34
+    },
+    {
+      "id": "flock-11435",
+      "name": "Emanuel Wilson",
+      "position": "RB",
+      "team": "SEA",
+      "baseRank": 259,
+      "tier": 15,
+      "byeWeek": 11,
+      "age": 27
+    },
+    {
+      "id": "flock-12495",
+      "name": "Ollie Gordon II",
+      "position": "RB",
+      "team": "MIA",
+      "baseRank": 260,
+      "tier": 15,
+      "byeWeek": 6,
+      "age": 22
+    },
+    {
+      "id": "flock-13378",
+      "name": "Cyrus Allen",
+      "position": "WR",
+      "team": "KC",
+      "baseRank": 261,
+      "tier": 15,
+      "byeWeek": 5,
+      "age": 23
+    },
+    {
+      "id": "flock-6865",
+      "name": "Colby Parkinson",
+      "position": "TE",
+      "team": "LAR",
+      "baseRank": 262,
+      "tier": 15,
+      "byeWeek": 11,
+      "age": 27
+    },
+    {
+      "id": "flock-13331",
+      "name": "Eli Heidenreich",
+      "position": "RB",
+      "team": "PIT",
+      "baseRank": 263,
+      "tier": 15,
+      "byeWeek": 9,
+      "age": 23
+    },
+    {
+      "id": "flock-12510",
+      "name": "Jalen Milroe",
+      "position": "QB",
+      "team": "SEA",
+      "baseRank": 264,
+      "tier": 15,
+      "byeWeek": 11,
+      "age": 23
+    },
+    {
+      "id": "flock-7571",
+      "name": "Rashod Bateman",
+      "position": "WR",
+      "team": "BAL",
+      "baseRank": 265,
+      "tier": 15,
+      "byeWeek": 13,
+      "age": 26
+    },
+    {
+      "id": "flock-11783",
+      "name": "Ryan Flournoy",
+      "position": "WR",
+      "team": "DAL",
+      "baseRank": 266,
+      "tier": 15,
+      "byeWeek": 14,
+      "age": 26
+    },
+    {
+      "id": "flock-11600",
+      "name": "Ja'Tavion Sanders",
+      "position": "TE",
+      "team": "CAR",
+      "baseRank": 267,
+      "tier": 15,
+      "byeWeek": 5,
+      "age": 23
+    },
+    {
+      "id": "flock-10444",
+      "name": "Cedric Tillman",
+      "position": "WR",
+      "team": "CLE",
+      "baseRank": 268,
+      "tier": 15,
+      "byeWeek": 11,
+      "age": 26
+    },
+    {
+      "id": "flock-9486",
+      "name": "Dontayvion Wicks",
+      "position": "WR",
+      "team": "PHI",
+      "baseRank": 269,
+      "tier": 15,
+      "byeWeek": 10,
+      "age": 25
+    },
+    {
+      "id": "flock-4039",
+      "name": "Cooper Kupp",
+      "position": "WR",
+      "team": "SEA",
+      "baseRank": 270,
+      "tier": 15,
+      "byeWeek": 11,
+      "age": 33
+    },
+    {
+      "id": "flock-11834",
+      "name": "Devaughn Vele",
+      "position": "WR",
+      "team": "NO",
+      "baseRank": 271,
+      "tier": 15,
+      "byeWeek": 8,
+      "age": 28
+    },
+    {
+      "id": "flock-9506",
+      "name": "Sean Tucker",
+      "position": "RB",
+      "team": "TB",
+      "baseRank": 272,
+      "tier": 15,
+      "byeWeek": 10,
+      "age": 24
+    },
+    {
+      "id": "flock-12455",
+      "name": "Brashard Smith",
+      "position": "RB",
+      "team": "KC",
+      "baseRank": 273,
+      "tier": 15,
+      "byeWeek": 5,
+      "age": 23
+    },
+    {
+      "id": "flock-4066",
+      "name": "Evan Engram",
+      "position": "TE",
+      "team": "DEN",
+      "baseRank": 274,
+      "tier": 15,
+      "byeWeek": 10,
+      "age": 31
+    },
+    {
+      "id": "flock-11571",
+      "name": "Isaiah Davis",
+      "position": "RB",
+      "team": "NYJ",
+      "baseRank": 275,
+      "tier": 15,
+      "byeWeek": 13,
+      "age": 24
+    },
+    {
+      "id": "flock-11643",
+      "name": "Jaylen Wright",
+      "position": "RB",
+      "team": "MIA",
+      "baseRank": 276,
+      "tier": 15,
+      "byeWeek": 6,
+      "age": 23
+    },
+    {
+      "id": "flock-5848",
+      "name": "Hollywood Brown",
+      "position": "WR",
+      "team": "PHI",
+      "baseRank": 277,
+      "tier": 15,
+      "byeWeek": 10,
+      "age": 29
+    },
+    {
+      "id": "flock-13259",
+      "name": "Jam Miller",
+      "position": "RB",
+      "team": "NE",
+      "baseRank": 278,
+      "tier": 15,
+      "byeWeek": 11
+    },
+    {
+      "id": "flock-11569",
+      "name": "Jarquez Hunter",
+      "position": "RB",
+      "team": "LAR",
+      "baseRank": 279,
+      "tier": 15,
+      "byeWeek": 11,
+      "age": 23
+    },
+    {
+      "id": "flock-4018",
+      "name": "Joe Mixon",
+      "position": "RB",
+      "team": "FA",
+      "baseRank": 280,
+      "tier": 15,
+      "age": 29
+    },
+    {
+      "id": "flock-13370",
+      "name": "Seth McGowan",
+      "position": "RB",
+      "team": "IND",
+      "baseRank": 281,
+      "tier": 15,
+      "byeWeek": 13,
+      "age": 24
+    },
+    {
+      "id": "flock-7528",
+      "name": "Najee Harris",
+      "position": "RB",
+      "team": "NYG",
+      "baseRank": 282,
+      "tier": 15,
+      "byeWeek": 8,
+      "age": 28
+    },
+    {
+      "id": "flock-13493",
+      "name": "Cole Payton",
+      "position": "QB",
+      "team": "PHI",
+      "baseRank": 283,
+      "tier": 15,
+      "byeWeek": 10,
+      "age": 23
+    },
+    {
+      "id": "flock-7538",
+      "name": "Zach Wilson",
+      "position": "QB",
+      "team": "NO",
+      "baseRank": 284,
+      "tier": 15,
+      "byeWeek": 8,
+      "age": 27
+    },
+    {
+      "id": "flock-9757",
+      "name": "Kendre Miller",
+      "position": "RB",
+      "team": "NO",
+      "baseRank": 285,
+      "tier": 15,
+      "byeWeek": 8,
+      "age": 24
+    },
+    {
+      "id": "flock-13286",
+      "name": "Brenen Thompson",
+      "position": "WR",
+      "team": "LAC",
+      "baseRank": 286,
+      "tier": 15,
+      "byeWeek": 7,
+      "age": 23
+    },
+    {
+      "id": "flock-11596",
+      "name": "Ben Sinnott",
+      "position": "TE",
+      "team": "WAS",
+      "baseRank": 287,
+      "tier": 15,
+      "byeWeek": 7,
+      "age": 24
+    },
+    {
+      "id": "flock-11651",
+      "name": "Isaac Guerendo",
+      "position": "RB",
+      "team": "SF",
+      "baseRank": 288,
+      "tier": 15,
+      "byeWeek": 8,
+      "age": 26
+    },
+    {
+      "id": "flock-13294",
+      "name": "Kevin Coleman Jr.",
+      "position": "WR",
+      "team": "MIA",
+      "baseRank": 289,
+      "tier": 15,
+      "byeWeek": 6,
+      "age": 22
+    },
+    {
+      "id": "flock-13240",
+      "name": "Taylen Green",
+      "position": "QB",
+      "team": "CLE",
+      "baseRank": 290,
+      "tier": 15,
+      "byeWeek": 11,
+      "age": 23
+    },
+    {
+      "id": "flock-2025007",
+      "name": "Trevor Etienne",
+      "position": "RB",
+      "team": "CAR",
+      "baseRank": 291,
+      "tier": 15,
+      "byeWeek": 5,
+      "age": 22
+    },
+    {
+      "id": "flock-6011",
+      "name": "Gardner Minshew",
+      "position": "QB",
+      "team": "ARI",
+      "baseRank": 292,
+      "tier": 15,
+      "byeWeek": 14,
+      "age": 30
+    },
+    {
+      "id": "flock-9494",
+      "name": "Marvin Mims",
+      "position": "WR",
+      "team": "DEN",
+      "baseRank": 293,
+      "tier": 15,
+      "byeWeek": 10,
+      "age": 24
+    },
+    {
+      "id": "flock-2025006",
+      "name": "Tahj Brooks",
+      "position": "RB",
+      "team": "CIN",
+      "baseRank": 294,
+      "tier": 15,
+      "byeWeek": 6,
+      "age": 24
+    },
+    {
+      "id": "flock-13255",
+      "name": "Desmond Reid",
+      "position": "RB",
+      "team": "FA",
+      "baseRank": 295,
+      "tier": 15,
+      "age": 21
+    },
+    {
+      "id": "flock-11619",
+      "name": "Ja'Lynn Polk",
+      "position": "WR",
+      "team": "FA",
+      "baseRank": 296,
+      "tier": 15,
+      "age": 24
+    },
+    {
+      "id": "flock-12048",
+      "name": "George Holani",
+      "position": "RB",
+      "team": "SEA",
+      "baseRank": 297,
+      "tier": 15,
+      "byeWeek": 11,
+      "age": 26
+    },
+    {
+      "id": "flock-13260",
+      "name": "J'Mari Taylor",
+      "position": "RB",
+      "team": "JAX",
+      "baseRank": 298,
+      "tier": 15,
+      "byeWeek": 7,
+      "age": 24
+    },
+    {
+      "id": "flock-12472",
+      "name": "Raheim Sanders",
+      "position": "RB",
+      "team": "CLE",
+      "baseRank": 299,
+      "tier": 15,
+      "byeWeek": 11,
+      "age": 24
+    },
+    {
+      "id": "flock-12541",
+      "name": "Dont'e Thornton Jr.",
+      "position": "WR",
+      "team": "LV",
+      "baseRank": 300,
+      "tier": 15,
+      "byeWeek": 13,
+      "age": 23
+    },
+    {
+      "id": "flock-13301",
+      "name": "Barion Brown",
+      "position": "WR",
+      "team": "NO",
+      "baseRank": 301,
+      "tier": 15,
+      "byeWeek": 8,
+      "age": 22
+    },
+    {
+      "id": "flock-13251",
+      "name": "Jaydn Ott",
+      "position": "RB",
+      "team": "KC",
+      "baseRank": 302,
+      "tier": 16,
+      "byeWeek": 5,
+      "age": 23
+    },
+    {
+      "id": "flock-4144",
+      "name": "Jonnu Smith",
+      "position": "TE",
+      "team": "FA",
+      "baseRank": 303,
+      "tier": 16,
+      "age": 30
+    },
+    {
+      "id": "flock-4098",
+      "name": "Kareem Hunt",
+      "position": "RB",
+      "team": "FA",
+      "baseRank": 304,
+      "tier": 16,
+      "age": 30
+    },
+    {
+      "id": "flock-8117",
+      "name": "Jalen Tolbert",
+      "position": "WR",
+      "team": "MIA",
+      "baseRank": 305,
+      "tier": 16,
+      "byeWeek": 6,
+      "age": 27
+    },
+    {
+      "id": "flock-9481",
+      "name": "Luke Musgrave",
+      "position": "TE",
+      "team": "GB",
+      "baseRank": 306,
+      "tier": 16,
+      "byeWeek": 11,
+      "age": 25
+    },
+    {
+      "id": "flock-13333",
+      "name": "Sam Roush",
+      "position": "TE",
+      "team": "CHI",
+      "baseRank": 307,
+      "tier": 16,
+      "byeWeek": 10,
+      "age": 22
+    },
+    {
+      "id": "flock-11581",
+      "name": "MarShawn Lloyd",
+      "position": "RB",
+      "team": "GB",
+      "baseRank": 308,
+      "tier": 16,
+      "byeWeek": 11,
+      "age": 25
+    },
+    {
+      "id": "flock-13319",
+      "name": "Tanner Koziol",
+      "position": "TE",
+      "team": "JAX",
+      "baseRank": 309,
+      "tier": 16,
+      "byeWeek": 7,
+      "age": 22
+    },
+    {
+      "id": "flock-1339",
+      "name": "Zach Ertz",
+      "position": "TE",
+      "team": "FA",
+      "baseRank": 310,
+      "tier": 16,
+      "age": 35
+    },
+    {
+      "id": "flock-12505",
+      "name": "Jalen Royals",
+      "position": "WR",
+      "team": "KC",
+      "baseRank": 311,
+      "tier": 16,
+      "byeWeek": 5,
+      "age": 23
+    },
+    {
+      "id": "flock-2025002",
+      "name": "LeQuint Allen",
+      "position": "RB",
+      "team": "JAX",
+      "baseRank": 312,
+      "tier": 16,
+      "byeWeek": 7,
+      "age": 22
+    },
+    {
+      "id": "flock-11592",
+      "name": "Erick All",
+      "position": "TE",
+      "team": "CIN",
+      "baseRank": 313,
+      "tier": 16,
+      "byeWeek": 6,
+      "age": 25
+    },
+    {
+      "id": "flock-8143",
+      "name": "Jerome Ford",
+      "position": "RB",
+      "team": "WAS",
+      "baseRank": 314,
+      "tier": 16,
+      "byeWeek": 7,
+      "age": 26
+    },
+    {
+      "id": "flock-19",
+      "name": "Joe Flacco",
+      "position": "QB",
+      "team": "CIN",
+      "baseRank": 315,
+      "tier": 16,
+      "byeWeek": 6,
+      "age": 41
+    },
+    {
+      "id": "flock-8188",
+      "name": "Tyquan Thornton",
+      "position": "WR",
+      "team": "KC",
+      "baseRank": 316,
+      "tier": 16,
+      "byeWeek": 5,
+      "age": 26
+    },
+    {
+      "id": "flock-4988",
+      "name": "Nick Chubb",
+      "position": "RB",
+      "team": "FA",
+      "baseRank": 317,
+      "tier": 16,
+      "age": 30
+    },
+    {
+      "id": "flock-4950",
+      "name": "Christian Kirk",
+      "position": "WR",
+      "team": "SF",
+      "baseRank": 318,
+      "tier": 17,
+      "byeWeek": 8,
+      "age": 29
+    },
+    {
+      "id": "flock-4993",
+      "name": "Mike Gesicki",
+      "position": "TE",
+      "team": "CIN",
+      "baseRank": 319,
+      "tier": 17,
+      "byeWeek": 6,
+      "age": 30
+    },
+    {
+      "id": "flock-13334",
+      "name": "Marlin Klein",
+      "position": "TE",
+      "team": "HOU",
+      "baseRank": 320,
+      "tier": 17,
+      "byeWeek": 8,
+      "age": 23
+    },
+    {
+      "id": "flock-9501",
+      "name": "DeMario Douglas",
+      "position": "WR",
+      "team": "NE",
+      "baseRank": 321,
+      "tier": 17,
+      "byeWeek": 11,
+      "age": 25
+    },
+    {
+      "id": "flock-12482",
+      "name": "Savion Williams",
+      "position": "WR",
+      "team": "GB",
+      "baseRank": 322,
+      "tier": 17,
+      "byeWeek": 11,
+      "age": 24
+    },
+    {
+      "id": "flock-13307",
+      "name": "Zavion Thomas",
+      "position": "WR",
+      "team": "CHI",
+      "baseRank": 323,
+      "tier": 17,
+      "byeWeek": 10,
+      "age": 22
+    },
+    {
+      "id": "flock-7828",
+      "name": "Noah Gray",
+      "position": "TE",
+      "team": "KC",
+      "baseRank": 324,
+      "tier": 17,
+      "byeWeek": 5,
+      "age": 27
+    },
+    {
+      "id": "flock-13297",
+      "name": "Eric McAlister",
+      "position": "WR",
+      "team": "FA",
+      "baseRank": 325,
+      "tier": 17
+    },
+    {
+      "id": "flock-6943",
+      "name": "Gabe Davis",
+      "position": "WR",
+      "team": "FA",
+      "baseRank": 326,
+      "tier": 17,
+      "age": 26
+    },
+    {
+      "id": "flock-11579",
+      "name": "Audric Estime",
+      "position": "RB",
+      "team": "NO",
+      "baseRank": 327,
+      "tier": 17,
+      "byeWeek": 8,
+      "age": 22
+    },
+    {
+      "id": "flock-6111",
+      "name": "Jake Browning",
+      "position": "QB",
+      "team": "TB",
+      "baseRank": 328,
+      "tier": 17,
+      "byeWeek": 10,
+      "age": 30
+    },
+    {
+      "id": "flock-12503",
+      "name": "Isaiah Bond",
+      "position": "WR",
+      "team": "CLE",
+      "baseRank": 329,
+      "tier": 17,
+      "byeWeek": 11,
+      "age": 22
+    },
+    {
+      "id": "flock-12542",
+      "name": "Efton Chism",
+      "position": "WR",
+      "team": "NE",
+      "baseRank": 330,
+      "tier": 17,
+      "byeWeek": 11,
+      "age": 24
+    },
+    {
+      "id": "flock-11630",
+      "name": "Roman Wilson",
+      "position": "WR",
+      "team": "PIT",
+      "baseRank": 331,
+      "tier": 17,
+      "byeWeek": 9,
+      "age": 25
+    },
+    {
+      "id": "flock-9479",
+      "name": "Darnell Washington",
+      "position": "TE",
+      "team": "PIT",
+      "baseRank": 332,
+      "tier": 17,
+      "byeWeek": 9,
+      "age": 25
+    },
+    {
+      "id": "flock-7596",
+      "name": "Elijah Moore",
+      "position": "WR",
+      "team": "PHI",
+      "baseRank": 333,
+      "tier": 17,
+      "byeWeek": 10,
+      "age": 26
+    },
+    {
+      "id": "flock-10235",
+      "name": "Roschon Johnson",
+      "position": "RB",
+      "team": "CHI",
+      "baseRank": 334,
+      "tier": 18,
+      "byeWeek": 10,
+      "age": 25
+    },
+    {
+      "id": "flock-1234",
+      "name": "Russell Wilson",
+      "position": "QB",
+      "team": "FA",
+      "baseRank": 335,
+      "tier": 18,
+      "age": 37
+    },
+    {
+      "id": "flock-12462",
+      "name": "Damien Martinez",
+      "position": "RB",
+      "team": "GB",
+      "baseRank": 336,
+      "tier": 18,
+      "byeWeek": 11,
+      "age": 22
+    },
+    {
+      "id": "flock-13283",
+      "name": "C.J. Daniels",
+      "position": "WR",
+      "team": "LAR",
+      "baseRank": 337,
+      "tier": 18,
+      "byeWeek": 11,
+      "age": 24
+    },
+    {
+      "id": "flock-11623",
+      "name": "Jordan Whittington",
+      "position": "WR",
+      "team": "LAR",
+      "baseRank": 338,
+      "tier": 18,
+      "byeWeek": 11,
+      "age": 25
+    },
+    {
+      "id": "flock-12486",
+      "name": "Dillon Gabriel",
+      "position": "QB",
+      "team": "CLE",
+      "baseRank": 339,
+      "tier": 18,
+      "byeWeek": 11,
+      "age": 25
+    },
+    {
+      "id": "flock-11562",
+      "name": "Spencer Rattler",
+      "position": "QB",
+      "team": "NO",
+      "baseRank": 340,
+      "tier": 18,
+      "byeWeek": 8,
+      "age": 25
+    },
+    {
+      "id": "flock-8162",
+      "name": "Sam Howell",
+      "position": "QB",
+      "team": "DAL",
+      "baseRank": 341,
+      "tier": 18,
+      "byeWeek": 14,
+      "age": 25
+    },
+    {
+      "id": "flock-6826",
+      "name": "Cole Kmet",
+      "position": "TE",
+      "team": "CHI",
+      "baseRank": 342,
+      "tier": 18,
+      "byeWeek": 10,
+      "age": 27
+    },
+    {
+      "id": "flock-5995",
+      "name": "Justice Hill",
+      "position": "RB",
+      "team": "BAL",
+      "baseRank": 343,
+      "tier": 18,
+      "byeWeek": 13,
+      "age": 28
+    },
+    {
+      "id": "flock-13232",
+      "name": "Garrett Nussmeier",
+      "position": "QB",
+      "team": "KC",
+      "baseRank": 344,
+      "tier": 18,
+      "byeWeek": 5,
+      "age": 24
+    },
+    {
+      "id": "flock-13381",
+      "name": "Lewis Bond",
+      "position": "WR",
+      "team": "HOU",
+      "baseRank": 345,
+      "tier": 18,
+      "byeWeek": 8,
+      "age": 23
+    },
+    {
+      "id": "flock-8135",
+      "name": "Treylon Burks",
+      "position": "WR",
+      "team": "WAS",
+      "baseRank": 346,
+      "tier": 18,
+      "byeWeek": 7,
+      "age": 26
+    },
+    {
+      "id": "flock-4082",
+      "name": "Curtis Samuel",
+      "position": "WR",
+      "team": "FA",
+      "baseRank": 347,
+      "tier": 18,
+      "age": 29
+    },
+    {
+      "id": "flock-12496",
+      "name": "Tai Felton",
+      "position": "WR",
+      "team": "MIN",
+      "baseRank": 348,
+      "tier": 18,
+      "byeWeek": 6,
+      "age": 23
+    },
+    {
+      "id": "flock-9999",
+      "name": "Will Levis",
+      "position": "QB",
+      "team": "TEN",
+      "baseRank": 349,
+      "tier": 18,
+      "byeWeek": 9,
+      "age": 27
+    },
+    {
+      "id": "flock-2309",
+      "name": "Amari Cooper",
+      "position": "WR",
+      "team": "FA",
+      "baseRank": 350,
+      "tier": 18,
+      "age": 31
+    },
+    {
+      "id": "flock-2307",
+      "name": "Marcus Mariota",
+      "position": "QB",
+      "team": "WAS",
+      "baseRank": 351,
+      "tier": 18,
+      "byeWeek": 7,
+      "age": 32
+    },
+    {
+      "id": "flock-6130",
+      "name": "Devin Singletary",
+      "position": "RB",
+      "team": "NYG",
+      "baseRank": 352,
+      "tier": 18,
+      "byeWeek": 8,
+      "age": 28
+    },
+    {
+      "id": "flock-10226",
+      "name": "Andrei Iosivas",
+      "position": "WR",
+      "team": "CIN",
+      "baseRank": 353,
+      "tier": 18,
+      "byeWeek": 6,
+      "age": 26
+    },
+    {
+      "id": "flock-5906",
+      "name": "Dawson Knox",
+      "position": "TE",
+      "team": "BUF",
+      "baseRank": 354,
+      "tier": 18,
+      "byeWeek": 7,
+      "age": 29
+    },
+    {
+      "id": "flock-12523",
+      "name": "Jimmy Horn Jr.",
+      "position": "WR",
+      "team": "CAR",
+      "baseRank": 355,
+      "tier": 18,
+      "byeWeek": 5,
+      "age": 23
+    },
+    {
+      "id": "flock-8698",
+      "name": "Jake Tonges",
+      "position": "TE",
+      "team": "SF",
+      "baseRank": 356,
+      "tier": 18,
+      "byeWeek": 8,
+      "age": 27
+    },
+    {
+      "id": "flock-4663",
+      "name": "Austin Ekeler",
+      "position": "RB",
+      "team": "FA",
+      "baseRank": 357,
+      "tier": 18,
+      "age": 30
+    },
+    {
+      "id": "flock-1689",
+      "name": "Adam Thielen",
+      "position": "WR",
+      "team": "FA",
+      "baseRank": 358,
+      "tier": 18,
+      "age": 35
+    },
+    {
+      "id": "flock-2306",
+      "name": "Jameis Winston",
+      "position": "QB",
+      "team": "NYG",
+      "baseRank": 359,
+      "tier": 18,
+      "byeWeek": 8,
+      "age": 32
+    },
+    {
+      "id": "flock-6945",
+      "name": "Antonio Gibson",
+      "position": "RB",
+      "team": "FA",
+      "baseRank": 360,
+      "tier": 18,
+      "age": 27
+    },
+    {
+      "id": "flock-13392",
+      "name": "Cole Payton",
+      "position": "QB",
+      "team": "FA",
+      "baseRank": 361,
+      "tier": 18,
+      "age": 20
+    },
+    {
+      "id": "flock-9505",
+      "name": "Deuce Vaughn",
+      "position": "RB",
+      "team": "FA",
+      "baseRank": 362,
+      "tier": 18,
+      "age": 24
+    },
+    {
+      "id": "flock-8225",
+      "name": "Daniel Bellinger",
+      "position": "TE",
+      "team": "TEN",
+      "baseRank": 363,
+      "tier": 18,
+      "byeWeek": 9,
+      "age": 25
+    },
+    {
+      "id": "flock-11577",
+      "name": "Will Shipley",
+      "position": "RB",
+      "team": "PHI",
+      "baseRank": 364,
+      "tier": 18,
+      "byeWeek": 10,
+      "age": 23
+    },
+    {
+      "id": "flock-12511",
+      "name": "Will Howard",
+      "position": "QB",
+      "team": "PIT",
+      "baseRank": 365,
+      "tier": 18,
+      "byeWeek": 9,
+      "age": 24
+    },
+    {
+      "id": "flock-2025005",
+      "name": "Phil Mafah",
+      "position": "RB",
+      "team": "DAL",
+      "baseRank": 366,
+      "tier": 18,
+      "byeWeek": 14,
+      "age": 23
+    },
+    {
+      "id": "flock-2505",
+      "name": "Darren Waller",
+      "position": "TE",
+      "team": "CAR",
+      "baseRank": 367,
+      "tier": 18,
+      "byeWeek": 5,
+      "age": 33
+    },
+    {
+      "id": "flock-1426",
+      "name": "DeAndre Hopkins",
+      "position": "WR",
+      "team": "FA",
+      "baseRank": 368,
+      "tier": 18,
+      "age": 33
+    },
+    {
+      "id": "flock-11617",
+      "name": "Malachi Corley",
+      "position": "WR",
+      "team": "CLE",
+      "baseRank": 369,
+      "tier": 18,
+      "byeWeek": 11,
+      "age": 24
+    },
+    {
+      "id": "flock-11199",
+      "name": "Emari Demercado",
+      "position": "RB",
+      "team": "KC",
+      "baseRank": 370,
+      "tier": 18,
+      "byeWeek": 5,
+      "age": 27
+    },
+    {
+      "id": "flock-8122",
+      "name": "Zonovan Knight",
+      "position": "RB",
+      "team": "ARI",
+      "baseRank": 371,
+      "tier": 18,
+      "byeWeek": 14,
+      "age": 25
+    },
+    {
+      "id": "flock-12516",
+      "name": "Kalel Mullings",
+      "position": "RB",
+      "team": "TEN",
+      "baseRank": 372,
+      "tier": 18,
+      "byeWeek": 9,
+      "age": 23
+    },
+    {
+      "id": "flock-2749",
+      "name": "Raheem Mostert",
+      "position": "RB",
+      "team": "FA",
+      "baseRank": 373,
+      "tier": 18,
+      "age": 33
+    },
+    {
+      "id": "flock-2374",
+      "name": "Tyler Lockett",
+      "position": "WR",
+      "team": "FA",
+      "baseRank": 374,
+      "tier": 18,
+      "age": 33
+    },
+    {
+      "id": "flock-12500",
+      "name": "Quinn Ewers",
+      "position": "QB",
+      "team": "MIA",
+      "baseRank": 375,
+      "tier": 18,
+      "byeWeek": 6,
+      "age": 23
+    },
+    {
+      "id": "flock-13250",
+      "name": "Le'Veon Moss",
+      "position": "RB",
+      "team": "FA",
+      "baseRank": 376,
+      "tier": 18
+    },
+    {
+      "id": "flock-8147",
+      "name": "John Metchie",
+      "position": "WR",
+      "team": "CAR",
+      "baseRank": 377,
+      "tier": 18,
+      "byeWeek": 5,
+      "age": 26
+    },
+    {
+      "id": "flock-7670",
+      "name": "Joshua Palmer",
+      "position": "WR",
+      "team": "BUF",
+      "baseRank": 378,
+      "tier": 18,
+      "byeWeek": 7,
+      "age": 26
+    },
+    {
+      "id": "flock-6151",
+      "name": "Miles Sanders",
+      "position": "RB",
+      "team": "FA",
+      "baseRank": 379,
+      "tier": 18,
+      "age": 28
+    },
+    {
+      "id": "flock-4234",
+      "name": "Noah Brown",
+      "position": "WR",
+      "team": "LV",
+      "baseRank": 380,
+      "tier": 18,
+      "byeWeek": 13,
+      "age": 30
+    },
+    {
+      "id": "flock-9497",
+      "name": "Jalin Hyatt",
+      "position": "WR",
+      "team": "NYG",
+      "baseRank": 381,
+      "tier": 18,
+      "byeWeek": 8,
+      "age": 24
+    },
+    {
+      "id": "flock-12520",
+      "name": "Xavier Restrepo",
+      "position": "WR",
+      "team": "TEN",
+      "baseRank": 382,
+      "tier": 18,
+      "byeWeek": 9,
+      "age": 24
+    },
+    {
+      "id": "flock-11557",
+      "name": "Joe Milton",
+      "position": "QB",
+      "team": "DAL",
+      "baseRank": 383,
+      "tier": 18,
+      "byeWeek": 14,
+      "age": 26
+    },
+    {
+      "id": "flock-13304",
+      "name": "Kendrick Law",
+      "position": "WR",
+      "team": "DET",
+      "baseRank": 384,
+      "tier": 18,
+      "byeWeek": 6,
+      "age": 23
+    },
+    {
+      "id": "flock-5857",
+      "name": "Noah Fant",
+      "position": "TE",
+      "team": "NO",
+      "baseRank": 385,
+      "tier": 18,
+      "byeWeek": 8,
+      "age": 28
+    },
+    {
+      "id": "flock-4147",
+      "name": "Samaje Perine",
+      "position": "RB",
+      "team": "CIN",
+      "baseRank": 386,
+      "tier": 18,
+      "byeWeek": 6,
+      "age": 30
+    },
+    {
+      "id": "flock-13376",
+      "name": "Kaden Wetjen",
+      "position": "WR",
+      "team": "PIT",
+      "baseRank": 387,
+      "tier": 18,
+      "byeWeek": 9,
+      "age": 24
+    },
+    {
+      "id": "flock-13526",
+      "name": "Deion Burks",
+      "position": "WR",
+      "team": "IND",
+      "baseRank": 388,
+      "tier": 19,
+      "byeWeek": 13,
+      "age": 23
+    },
+    {
+      "id": "flock-8119",
+      "name": "Jahan Dotson",
+      "position": "WR",
+      "team": "ATL",
+      "baseRank": 389,
+      "tier": 19,
+      "byeWeek": 11,
+      "age": 26
+    },
+    {
+      "id": "flock-7607",
+      "name": "Michael Carter",
+      "position": "RB",
+      "team": "TEN",
+      "baseRank": 390,
+      "tier": 19,
+      "byeWeek": 9,
+      "age": 27
+    },
+    {
+      "id": "flock-11439",
+      "name": "Jaleel McLaughlin",
+      "position": "RB",
+      "team": "DEN",
+      "baseRank": 391,
+      "tier": 19,
+      "byeWeek": 10,
+      "age": 25
+    },
+    {
+      "id": "flock-8129",
+      "name": "Dameon Pierce",
+      "position": "RB",
+      "team": "PHI",
+      "baseRank": 392,
+      "tier": 19,
+      "byeWeek": 10,
+      "age": 26
+    },
+    {
+      "id": "flock-6149",
+      "name": "Darius Slayton",
+      "position": "WR",
+      "team": "NYG",
+      "baseRank": 393,
+      "tier": 19,
+      "byeWeek": 8,
+      "age": 29
+    },
+    {
+      "id": "flock-13238",
+      "name": "Diego Pavia",
+      "position": "QB",
+      "team": "FA",
+      "baseRank": 394,
+      "tier": 19,
+      "age": 24
+    },
+    {
+      "id": "flock-7587",
+      "name": "Dyami Brown",
+      "position": "WR",
+      "team": "WAS",
+      "baseRank": 395,
+      "tier": 19,
+      "byeWeek": 7,
+      "age": 26
+    },
+    {
+      "id": "flock-7601",
+      "name": "Rondale Moore",
+      "position": "WR",
+      "team": "FA",
+      "baseRank": 396,
+      "tier": 19,
+      "age": 25
+    },
+    {
+      "id": "flock-13361",
+      "name": "Jalon Daniels",
+      "position": "QB",
+      "team": "TB",
+      "baseRank": 397,
+      "tier": 19,
+      "byeWeek": 10,
+      "age": 23
+    },
+    {
+      "id": "flock-2025010",
+      "name": "Jaylin Lane",
+      "position": "WR",
+      "team": "WAS",
+      "baseRank": 398,
+      "tier": 19,
+      "byeWeek": 7,
+      "age": 24
+    },
+    {
+      "id": "flock-13300",
+      "name": "Reggie Virgil",
+      "position": "WR",
+      "team": "ARI",
+      "baseRank": 399,
+      "tier": 19,
+      "byeWeek": 14,
+      "age": 22
+    },
+    {
+      "id": "flock-8125",
+      "name": "Calvin Austin",
+      "position": "WR",
+      "team": "NYG",
+      "baseRank": 400,
+      "tier": 19,
+      "byeWeek": 8,
+      "age": 27
+    },
+    {
+      "id": "flock-7585",
+      "name": "Davis Mills",
+      "position": "QB",
+      "team": "HOU",
+      "baseRank": 401,
+      "tier": 19,
+      "byeWeek": 8,
+      "age": 27
+    },
+    {
+      "id": "flock-10866",
+      "name": "Aidan O'Connell",
+      "position": "QB",
+      "team": "LV",
+      "baseRank": 402,
+      "tier": 19,
+      "byeWeek": 13,
+      "age": 27
+    },
+    {
+      "id": "flock-11645",
+      "name": "Javon Baker",
+      "position": "WR",
+      "team": "FA",
+      "baseRank": 403,
+      "tier": 19,
+      "age": 23
+    },
+    {
+      "id": "flock-11650",
+      "name": "Luke McCaffrey",
+      "position": "WR",
+      "team": "WAS",
+      "baseRank": 404,
+      "tier": 19,
+      "byeWeek": 7,
+      "age": 25
+    },
+    {
+      "id": "flock-10225",
+      "name": "Jonathan Mingo",
+      "position": "WR",
+      "team": "DAL",
+      "baseRank": 405,
+      "tier": 19,
+      "byeWeek": 14,
+      "age": 25
+    },
+    {
+      "id": "flock-13335",
+      "name": "Josh Cuevas",
+      "position": "TE",
+      "team": "BAL",
+      "baseRank": 406,
+      "tier": 19,
+      "byeWeek": 13,
+      "age": 22
+    },
+    {
+      "id": "flock-11595",
+      "name": "Jared Wiley",
+      "position": "TE",
+      "team": "KC",
+      "baseRank": 407,
+      "tier": 19,
+      "byeWeek": 5,
+      "age": 25
+    },
+    {
+      "id": "flock-7562",
+      "name": "Tutu Atwell",
+      "position": "WR",
+      "team": "MIA",
+      "baseRank": 408,
+      "tier": 19,
+      "byeWeek": 6,
+      "age": 26
+    },
+    {
+      "id": "flock-3271",
+      "name": "Tyler Higbee",
+      "position": "TE",
+      "team": "LAR",
+      "baseRank": 409,
+      "tier": 19,
+      "byeWeek": 11,
+      "age": 33
+    },
+    {
+      "id": "flock-5010",
+      "name": "Will Dissly",
+      "position": "TE",
+      "team": "FA",
+      "baseRank": 410,
+      "tier": 19,
+      "age": 29
+    },
+    {
+      "id": "flock-13372",
+      "name": "Malik Benson",
+      "position": "WR",
+      "team": "LV",
+      "baseRank": 411,
+      "tier": 19,
+      "byeWeek": 13,
+      "age": 23
+    },
+    {
+      "id": "flock-2197",
+      "name": "Brandin Cooks",
+      "position": "WR",
+      "team": "FA",
+      "baseRank": 412,
+      "tier": 19,
+      "age": 32
+    },
+    {
+      "id": "flock-12470",
+      "name": "Riley Leonard",
+      "position": "QB",
+      "team": "IND",
+      "baseRank": 413,
+      "tier": 19,
+      "byeWeek": 13,
+      "age": 23
+    },
+    {
+      "id": "flock-11605",
+      "name": "Jaheim Bell",
+      "position": "TE",
+      "team": "PIT",
+      "baseRank": 414,
+      "tier": 19,
+      "byeWeek": 9,
+      "age": 25
+    },
+    {
+      "id": "flock-13389",
+      "name": "Seydou Traore",
+      "position": "TE",
+      "team": "MIA",
+      "baseRank": 415,
+      "tier": 19,
+      "byeWeek": 6,
+      "age": 24
+    },
+    {
+      "id": "flock-13568",
+      "name": "Matthew Hibner",
+      "position": "TE",
+      "team": "BAL",
+      "baseRank": 416,
+      "tier": 19,
+      "byeWeek": 13
+    },
+    {
+      "id": "flock-10871",
+      "name": "Luke Schoonmaker",
+      "position": "TE",
+      "team": "DAL",
+      "baseRank": 417,
+      "tier": 19,
+      "byeWeek": 14,
+      "age": 27
+    },
+    {
+      "id": "flock-12539",
+      "name": "Arian Smith",
+      "position": "WR",
+      "team": "NYJ",
+      "baseRank": 418,
+      "tier": 19,
+      "byeWeek": 13,
+      "age": 24
+    },
+    {
+      "id": "flock-11821",
+      "name": "Tahj Washington",
+      "position": "WR",
+      "team": "MIA",
+      "baseRank": 419,
+      "tier": 19,
+      "byeWeek": 6,
+      "age": 25
+    },
+    {
+      "id": "flock-4454",
+      "name": "Kendrick Bourne",
+      "position": "WR",
+      "team": "ARI",
+      "baseRank": 420,
+      "tier": 19,
+      "byeWeek": 14,
+      "age": 31
+    },
+    {
+      "id": "flock-7608",
+      "name": "Khalil Herbert",
+      "position": "RB",
+      "team": "FA",
+      "baseRank": 421,
+      "tier": 19,
+      "age": 28
+    },
+    {
+      "id": "flock-5987",
+      "name": "Alexander Mattison",
+      "position": "RB",
+      "team": "FA",
+      "baseRank": 422,
+      "tier": 20,
+      "age": 27
+    },
+    {
+      "id": "flock-12670",
+      "name": "KeAndre Lambert-Smith",
+      "position": "WR",
+      "team": "LAC",
+      "baseRank": 423,
+      "tier": 20,
+      "byeWeek": 7,
+      "age": 24
+    },
+    {
+      "id": "flock-5133",
+      "name": "Tyler Conklin",
+      "position": "TE",
+      "team": "DET",
+      "baseRank": 424,
+      "tier": 20,
+      "byeWeek": 6,
+      "age": 31
+    },
+    {
+      "id": "flock-6845",
+      "name": "Zack Moss",
+      "position": "RB",
+      "team": "FA",
+      "baseRank": 425,
+      "tier": 21,
+      "age": 27
+    },
+    {
+      "id": "flock-11640",
+      "name": "Jermaine Burton",
+      "position": "WR",
+      "team": "FA",
+      "baseRank": 426,
+      "tier": 21,
+      "age": 24
+    },
+    {
+      "id": "flock-4219",
+      "name": "Jeremy McNichols",
+      "position": "RB",
+      "team": "WAS",
+      "baseRank": 427,
+      "tier": 21,
+      "byeWeek": 7,
+      "age": 30
+    },
+    {
+      "id": "flock-6828",
+      "name": "AJ Dillon",
+      "position": "RB",
+      "team": "CAR",
+      "baseRank": 428,
+      "tier": 21,
+      "byeWeek": 5,
+      "age": 28
+    },
+    {
+      "id": "flock-11570",
+      "name": "Rasheen Ali",
+      "position": "RB",
+      "team": "BAL",
+      "baseRank": 429,
+      "tier": 21,
+      "byeWeek": 13,
+      "age": 25
+    },
+    {
+      "id": "flock-6039",
+      "name": "Ty Johnson",
+      "position": "RB",
+      "team": "BUF",
+      "baseRank": 430,
+      "tier": 21,
+      "byeWeek": 7,
+      "age": 28
+    },
+    {
+      "id": "flock-4080",
+      "name": "Zay Jones",
+      "position": "WR",
+      "team": "FA",
+      "baseRank": 431,
+      "tier": 22,
+      "age": 30
+    },
+    {
+      "id": "flock-3286",
+      "name": "Demarcus Robinson",
+      "position": "WR",
+      "team": "SF",
+      "baseRank": 432,
+      "tier": 22,
+      "byeWeek": 8,
+      "age": 31
+    },
+    {
+      "id": "flock-5970",
+      "name": "Greg Dortch",
+      "position": "WR",
+      "team": "DET",
+      "baseRank": 433,
+      "tier": 22,
+      "byeWeek": 6,
+      "age": 28
+    },
+    {
+      "id": "flock-10218",
+      "name": "Xavier Hutchinson",
+      "position": "WR",
+      "team": "HOU",
+      "baseRank": 434,
+      "tier": 22,
+      "byeWeek": 8,
+      "age": 26
+    },
+    {
+      "id": "flock-2078",
+      "name": "Odell Beckham",
+      "position": "WR",
+      "team": "NYG",
+      "baseRank": 435,
+      "tier": 22,
+      "byeWeek": 8,
+      "age": 33
+    },
+    {
+      "id": "flock-4068",
+      "name": "Mike Williams",
+      "position": "WR",
+      "team": "FA",
+      "baseRank": 436,
+      "tier": 22,
+      "age": 30
+    },
+    {
+      "id": "flock-7568",
+      "name": "Brevin Jordan",
+      "position": "TE",
+      "team": "HOU",
+      "baseRank": 437,
+      "tier": 22,
+      "byeWeek": 8,
+      "age": 26
+    },
+    {
+      "id": "flock-8160",
+      "name": "Kenny Pickett",
+      "position": "QB",
+      "team": "CAR",
+      "baseRank": 438,
+      "tier": 22,
+      "byeWeek": 5,
+      "age": 28
+    },
+    {
+      "id": "flock-3048",
+      "name": "Chris Manhertz",
+      "position": "TE",
+      "team": "NYG",
+      "baseRank": 439,
+      "tier": 22,
+      "byeWeek": 8,
+      "age": 34
+    }
+  ]
+}
