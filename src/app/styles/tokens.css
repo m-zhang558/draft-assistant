@@ -1,0 +1,94 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens — defined once, referenced everywhere via Tailwind utilities.
+ * No ad-hoc hex colours in components; add a token here instead.
+ */
+@theme {
+  /* --- Neutral ramp --- */
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #f8fafc;
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
+  --color-neutral-950: #020617;
+
+  /* --- Accent --- */
+  --color-accent-50: #eff6ff;
+  --color-accent-100: #dbeafe;
+  --color-accent-400: #60a5fa;
+  --color-accent-500: #3b82f6;
+  --color-accent-600: #2563eb;
+  --color-accent-700: #1d4ed8;
+
+  /* --- Semantic tokens (light mode is the default) --- */
+  --color-surface: var(--color-neutral-0);
+  --color-surface-muted: var(--color-neutral-50);
+  --color-border: var(--color-neutral-200);
+  --color-text-primary: var(--color-neutral-900);
+  --color-text-muted: var(--color-neutral-500);
+  --color-accent: var(--color-accent-600);
+  --color-accent-contrast: var(--color-neutral-0);
+  --color-danger: #dc2626;
+  --color-success: #16a34a;
+
+  /* --- Spacing scale --- */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+
+  /* --- Radius scale --- */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-full: 9999px;
+
+  /* --- Type scale ---
+   * Tailwind v4 namespaces: --font-* drives font-* utilities, --text-* drives
+   * text-* utilities, and --text-<n>--line-height pairs the leading to the size.
+   * Naming these --font-size-* / --font-family-* would define inert variables
+   * that generate no utilities and silently leave the defaults in place. */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.5rem;
+  --text-xl--line-height: 2rem;
+  --text-2xl: 2rem;
+  --text-2xl--line-height: 2.5rem;
+}
+
+/*
+ * Dark mode reserved for Phase 3.4 (theme toggle). Tokens defined here so the
+ * palette is decided once; nothing wires this up yet.
+ *
+ * :root[data-theme='dark'] {
+ *   --color-surface: var(--color-neutral-900);
+ *   --color-surface-muted: var(--color-neutral-800);
+ *   --color-border: var(--color-neutral-700);
+ *   --color-text-primary: var(--color-neutral-50);
+ *   --color-text-muted: var(--color-neutral-400);
+ *   --color-accent: var(--color-accent-500);
+ *   --color-accent-contrast: var(--color-neutral-950);
+ * }
+ */
+
+body {
+  background-color: var(--color-surface-muted);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}

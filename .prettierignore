@@ -1,0 +1,8 @@
+node_modules/
+dist/
+coverage/
+package-lock.json
+
+# Markdown is hand-authored spec/documentation with deliberate table alignment
+# and prose wrapping. Prettier would reflow it; keep it out of `npm run format`.
+*.md
