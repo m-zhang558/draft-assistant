@@ -93,25 +93,118 @@ page with every edit intact.
 | 3.5 | Responsive | Usable on a phone — thumb-reachable cross-off, no horizontal scroll |
 | 3.6 | Accessibility pass | Focus order, ARIA for the sortable list, live region on cross-off, contrast audit |
 | 3.7 | Performance | Virtualised list; verify no dropped frames while dragging a 400-row board |
-| 3.8 | Export / import | Download and restore board state as JSON — the backup for a browser wipe |
+| 3.8 | Export / import | Download and restore board state as JSON — the backup for a browser wipe. Superseded by 4.13 if Phase 4 lands. |
 
 **Done when:** a full mock draft can be run end to end without friction, and a keyboard-only
 user can do everything a mouse user can.
 
 ---
 
-## Phase 4 — Beyond the MVP
+## Phase 4 — SQLite persistence and the features it unlocks
 
-Only after real draft usage tells us which of these actually matters.
+*Goal: replace `localStorage` with a real embedded database, then build the features that
+were impractical without one.*
 
-- **Custom tiers** — draw your own tier breaks instead of inheriting the source's.
-- **Notes** — a short per-player note ("hamstring, monitor Thursday").
-- **Watchlist / targets** — star players and filter to them.
-- **Positional scarcity** — show how many players remain above a value threshold per position.
-- **Multiple boards** — separate saved boards per league, not just per format.
-- **Bye-week view** — surface bye collisions among your drafted players.
-- **Dataset refresh** — drop in an updated ranking file and reconcile it against your edits
-  (new players added, retired players removed, your `order` preserved).
+Only start after real draft usage. Phases 0–3 ship on `localStorage` deliberately — 6 KB of
+player ids needs no database, and the `state/` layer boundary means swapping the storage
+engine touches that layer and nothing above it.
+
+**Why a database earns its place here and not earlier.** Every Phase 4 feature below is
+relational or query-shaped: notes and watchlist flags are *per player per board*, multiple
+boards multiply that, scarcity and bye-collision views are aggregations, and dataset refresh
+is a set difference against a previous snapshot. Expressing those over a single serialized
+JSON blob means loading everything and filtering in JS on every change. That is the point at
+which SQL stops being overhead and starts being the simpler option.
+
+### 4.1–4.4 — The persistence layer
+
+| # | Item | Detail |
+|---|---|---|
+| 4.1 | Engine + VFS | `@sqlite.org/sqlite-wasm` with the **`opfs-sahpool`** VFS, running in a **Web Worker** |
+| 4.2 | Schema + migrations | Versioned `schema_version` table; forward-only migrations, each in its own transaction |
+| 4.3 | Async state boundary | `state/` persistence becomes `async`; the store keeps its synchronous in-memory read path |
+| 4.4 | Migration from `localStorage` | One-time, **non-destructive** import; the old key is left intact until the user confirms |
+
+**VFS choice is not interchangeable — this is the load-bearing decision.** SQLite WASM offers
+several storage backends and they differ in ways that directly hit our constraints:
+
+| VFS | Storage | COOP/COEP headers | Works on GitHub Pages |
+|---|---|---|---|
+| `kvvfs` | `localStorage`, ~5 MB | No | Yes — but it *is* localStorage, with SQL overhead on top |
+| `opfs` | OPFS, generous quota | **Required** (needs `SharedArrayBuffer`) | **No** |
+| `opfs-sahpool` | OPFS, generous quota | No | **Yes** |
+
+`PROJECT.md` §4 commits to "any static host (Vercel / Netlify / GH Pages)". **GitHub Pages
+cannot set custom response headers**, so the standard `opfs` VFS would silently remove a
+hosting target we promised. `opfs-sahpool` needs no headers, is the fastest of the options,
+and supports Chrome 108+ / Firefox 111+ / Safari 16.4+. Its limitation — a single connection,
+no multi-tab concurrency — is irrelevant for a single-user board and is the correct trade.
+
+**OPFS is Worker-only.** The database cannot be touched from the main thread, so persistence
+becomes asynchronous and message-passed. This is the real cost of the migration and the
+reason it is not in Phase 2: it changes the shape of the `state/` API. Mitigation — the
+Zustand store stays the synchronous source of truth for rendering, and the worker is written
+through on commit. **The UI must never await a query to paint a row.**
+
+### 4.5 — Schema sketch
+
+```sql
+CREATE TABLE schema_version (version INTEGER NOT NULL);
+
+CREATE TABLE board (
+  id         INTEGER PRIMARY KEY,
+  name       TEXT    NOT NULL,
+  format     TEXT    NOT NULL CHECK (format IN ('redraft-ppr', 'dynasty-sf')),
+  created_at TEXT    NOT NULL
+);
+
+CREATE TABLE board_player (
+  board_id   INTEGER NOT NULL REFERENCES board(id) ON DELETE CASCADE,
+  player_id  TEXT    NOT NULL,          -- 'flock-9221'; joins to the bundled dataset
+  sort_order REAL    NOT NULL,          -- fractional; see below
+  drafted    INTEGER NOT NULL DEFAULT 0 CHECK (drafted IN (0, 1)),
+  watched    INTEGER NOT NULL DEFAULT 0 CHECK (watched IN (0, 1)),
+  note       TEXT,
+  PRIMARY KEY (board_id, player_id)
+);
+
+CREATE INDEX board_player_order ON board_player (board_id, sort_order);
+```
+
+**`sort_order` is `REAL`, not a dense integer, and that matters.** With dense integers,
+dragging one player from rank 400 to rank 2 renumbers ~398 rows — one `UPDATE` each, on the
+drag that must stay at 60fps. With fractional ordering a move is a **single `UPDATE`**: the
+new value is the midpoint of its two neighbours. IEEE-754 doubles allow roughly 50 successive
+midpoint splits in the same gap before precision runs out, so pair it with a renormalisation
+pass that rewrites the whole board to evenly spaced values when any gap gets too small. Rare,
+cheap, and off the interaction path.
+
+### 4.6 — Features the database unlocks
+
+| # | Item | Detail |
+|---|---|---|
+| 4.6 | Multiple boards | Separate saved boards per league, not just per format — the `board` table is the whole feature |
+| 4.7 | Notes | Per-player note ("hamstring, monitor Thursday") — `board_player.note` |
+| 4.8 | Watchlist / targets | Star players and filter to them — `board_player.watched` |
+| 4.9 | Custom tiers | Draw your own tier breaks instead of inheriting the source's |
+| 4.10 | Positional scarcity | How many players remain above a value threshold per position — a `GROUP BY` |
+| 4.11 | Bye-week view | Surface bye collisions among your drafted players |
+| 4.12 | Dataset refresh | Reconcile a refreshed dataset against your edits: new players inserted at `baseRank`, retired players dropped, your ordering preserved |
+| 4.13 | Export / import | Supersedes 3.8 — export the raw `.sqlite` file, which is a complete, portable, inspectable backup |
+
+### Risks to weigh before starting
+
+- **Bundle cost.** The SQLite WASM binary is roughly 800 KB–1 MB before compression, against a
+  current bundle of 301 KB. It must be lazy-loaded, not eagerly imported, or first paint on
+  draft day regresses badly.
+- **OPFS is not visible to the user.** Unlike a downloaded file, there is no way to inspect or
+  hand-recover the database outside the browser. 4.13 export stops being a nicety and becomes
+  the only recovery path — build it in the same phase, not after.
+- **Private browsing restricts OPFS unpredictably**, and detection is deliberately difficult.
+  The failure must be surfaced loudly rather than silently falling back to a different store —
+  a silent downgrade means the user's board quietly stops persisting.
+- **This is a one-way door for the data**, not for the code. Migrating 4.4 is easy; migrating
+  a user's accumulated notes and boards *back* to `localStorage` is not.
 
 ## Phase 5 — Speculative
 
@@ -129,9 +222,11 @@ Not planned. Recorded so they don't get invented mid-build.
 
 ```
 Phase 0 ──▶ Phase 1 ──▶ Phase 2 ──▶ Phase 3 ──▶ Phase 4 ──▶ Phase 5
-foundation   data        core         polish      extras     speculative
-                          ▲
-                    MVP is usable here
+foundation   data        core         polish      sqlite +   speculative
+                          ▲                       extras
+                    MVP is usable here            ▲
+                                          storage engine swaps here,
+                                          behind the state/ boundary
 ```
 
 Nothing in Phases 2–3 can start before Phase 1's domain types exist. Within Phase 2, 2.1–2.2
@@ -148,3 +243,13 @@ gate everything else; 2.3–2.10 are independent of each other once the store ex
 4. **Rookie draft picks** (new, from Phase 1) — the dynasty feed carries 17 tradeable picks
    (`"2027 EARLY 1st"`) that Phase 1 drops, since `Position` has no slot for them. Worth
    representing for dynasty *startup* drafts? Parked as a Phase 4 candidate.
+5. **Do the rankings themselves go into SQLite?** (new, blocks 4.5's final schema.) Phase 1
+   bundles them into the JS at build time and `RankingSource.load` is synchronous because of
+   it. Loading them into SQLite too would let 4.10 scarcity and 4.11 bye-collision run as
+   single joined queries instead of JS filters over a bundled array. The cost is a second
+   copy of the data plus a sync step whenever the dataset is regenerated. **Recommendation:**
+   keep rankings bundled and read-only, and join in JS — revisit only if a Phase 4 query
+   turns out to be genuinely awkward. Do not change `RankingSource`.
+6. **Does Phase 4 start at all?** SQLite is planned here, not committed. If notes, multiple
+   boards, and history never get used in a real draft, `localStorage` remains correct and
+   this phase should be dropped rather than built for its own sake.
