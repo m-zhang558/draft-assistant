@@ -78,6 +78,19 @@ page with every edit intact.
 `order` array without disturbing the relative position of hidden players. Handle it in
 `domain/board.ts` where it's unit-testable — not in the drag handler.
 
+> **Done (2026-08-18) — see `docs/summary-reports/phase-2-core-interactivity.md`.** All ten
+> items shipped; 133 tests pass; `typecheck`, `lint`, `build` and `prettier` are clean. Three
+> things future phases need to know:
+>
+> - **2.5 uses Alt+↑/↓, not bare ↑/↓.** Bare arrows are claimed by dnd-kit's keyboard drag
+>   (Space to lift, arrows to move, Space to drop) and by browser scrolling. The row-level
+>   shortcut is Alt+↑/↓; the drag handle is the dnd-kit keyboard activator.
+> - **A minimal `reconcileOrder` landed early**, because a persisted `order` has to be made
+>   consistent with the loaded dataset or the board renders wrong. This shrinks **4.12** to
+>   the reporting and edge-case work rather than the whole mechanism.
+> - **The board is a `<ul>` grid, not the Phase 1 `<table>`.** dnd-kit transforms on `<tr>`
+>   are unreliable. `features/board/player-list.tsx` was deleted.
+
 ---
 
 ## Phase 3 — Draft-day polish *(completes the MVP)*
@@ -86,17 +99,38 @@ page with every edit intact.
 
 | # | Item | Detail |
 |---|---|---|
-| 3.1 | Undo / redo | Snapshot-based, keyboard-bound. The safety net for a misclick at pick 4.03. |
+| 3.1 | Undo / redo | Snapshot-based, keyboard-bound. The safety net for a misclick at pick 4.03. Phase 2's store keeps `order`/`drafted` immutable-by-replacement, so a snapshot is a shallow copy. |
 | 3.2 | Motion | Reorder and cross-off animate; respects `prefers-reduced-motion` |
 | 3.3 | Tier bands | Visual grouping by tier, so a tier break is obvious at a glance |
 | 3.4 | Density + dark mode | Compact row option; dark theme (a draft runs at night) |
 | 3.5 | Responsive | Usable on a phone — thumb-reachable cross-off, no horizontal scroll |
 | 3.6 | Accessibility pass | Focus order, ARIA for the sortable list, live region on cross-off, contrast audit |
-| 3.7 | Performance | Virtualised list; verify no dropped frames while dragging a 400-row board |
+| 3.7 | Performance | Virtualised list; verify no dropped frames while dragging a 400-row board — measured by hand in Chrome's Performance panel, not by an automated browser test (`PROJECT.md` §4) |
 | 3.8 | Export / import | Download and restore board state as JSON — the backup for a browser wipe. Superseded by 4.13 if Phase 4 lands. |
 
 **Done when:** a full mock draft can be run end to end without friction, and a keyboard-only
 user can do everything a mouse user can.
+
+> **Done (2026-08-18) — see `docs/summary-reports/phase-3-draft-day-polish.md`.** All eight
+> items shipped; `typecheck`, `lint`, `test`, `build` and `prettier` are clean. **The MVP is
+> complete.** Five things future phases need to know:
+>
+> - **Undo snapshots `{activeFormat, boards}`, not just `boards`.** Restoring the format means an
+>   undo is always *visible* rather than silently changing a board you aren't looking at. View
+>   state (filters, theme, density) is deliberately not undoable. History is capped at 50 and is
+>   **not persisted**.
+> - **Persistence is at `schemaVersion` 2**, reached by a named forward-only `migrateV1ToV2` —
+>   the first real exercise of the migration seam, and the shape v3 should copy. Phase 4.4's
+>   localStorage→SQLite import inherits it.
+> - **Virtualisation is hand-rolled** (`features/board/virtual-window.ts` pure + `use-virtual-rows.ts`
+>   DOM), with no new dependency. Row height has one source of truth, `row-grid.ts`'s
+>   `resolveRowHeight`, shared by the CSS and the windowing arithmetic — do not let a second
+>   place compute it.
+> - **Pointer-drag behaviour under virtualisation is untested by design**, since jsdom does no
+>   layout. Keyboard reordering is fully covered. 3.7's frame-timing measurement in Chrome's
+>   Performance panel is still outstanding and is a hand check, per `PROJECT.md` §4.
+> - **3.8 export/import round-trips the persisted blob itself**, so a v1 backup imports through
+>   the same migration. If Phase 4 lands, 4.13 supersedes it with a raw `.sqlite` export.
 
 ---
 
@@ -223,10 +257,13 @@ Not planned. Recorded so they don't get invented mid-build.
 ```
 Phase 0 ──▶ Phase 1 ──▶ Phase 2 ──▶ Phase 3 ──▶ Phase 4 ──▶ Phase 5
 foundation   data        core         polish      sqlite +   speculative
-                          ▲                       extras
-                    MVP is usable here            ▲
-                                          storage engine swaps here,
-                                          behind the state/ boundary
+  done        done        done         done       extras
+                          ▲             ▲
+                    MVP is usable   MVP COMPLETE ──▶ next step is using it in a
+                    from here       (2026-08-18)     real draft, not building 4
+                                                ▲
+                                        storage engine swaps here,
+                                        behind the state/ boundary
 ```
 
 Nothing in Phases 2–3 can start before Phase 1's domain types exist. Within Phase 2, 2.1–2.2
@@ -236,10 +273,12 @@ gate everything else; 2.3–2.10 are independent of each other once the store ex
 
 1. ~~**Ranking data source**~~ — **resolved in Phase 1.** Generated from Flock's public API by
    `scripts/fetch-rankings.mjs`; refresh = re-run + commit the diff.
-2. **Stack confirmation** — `PROJECT.md` §4 is a proposal, not a decision. Change it now
-   rather than in Phase 2.
+2. ~~**Stack confirmation**~~ — **resolved in Phase 2.** Vite + React 19 + Tailwind v4 +
+   Zustand + dnd-kit + Vitest/RTL are all now in use and carrying real features. `PROJECT.md`
+   §4 is a decision, not a proposal. Changing any row from here is a migration.
 3. ~~**Dynasty SF depth**~~ — **resolved: 439 players** (426 redraft). Above the ~400 threshold,
-   so Phase 3.7 virtualisation is **required**, not optional.
+   so Phase 3.7 virtualisation was **required**, not optional — **shipped in Phase 3**,
+   hand-rolled, no new dependency.
 4. **Rookie draft picks** (new, from Phase 1) — the dynasty feed carries 17 tradeable picks
    (`"2027 EARLY 1st"`) that Phase 1 drops, since `Position` has no slot for them. Worth
    representing for dynasty *startup* drafts? Parked as a Phase 4 candidate.

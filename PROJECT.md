@@ -128,7 +128,9 @@ treat it as a load failure:
 ## 4. Stack
 
 Chosen for zero-backend, instant-load, offline-capable. If you want something different,
-say so — this is the working assumption, not a fixed decision.
+say so.
+
+**Confirmed in Phase 2** — every row below is now actually in use, not a proposal.
 
 | Concern | Choice | Why |
 |---|---|---|
@@ -138,8 +140,33 @@ say so — this is the working assumption, not a fixed decision.
 | Drag & drop | `@dnd-kit/core` + `@dnd-kit/sortable` | Accessible (keyboard reorder), no legacy HTML5 DnD quirks |
 | State | Zustand | Small store, no boilerplate, easy to snapshot for undo |
 | Persistence | `localStorage` (JSON) | No server; survives refresh; trivially exportable |
-| Tests | Vitest + React Testing Library | Unit + component; Playwright deferred to a later phase |
+| Tests | Vitest + React Testing Library | Unit + component. No browser-automation layer — see below |
+| Virtualisation | Hand-rolled (`features/board/virtual-window.ts`) | ~100 lines of fixed-height windowing; the hard part is where it meets dnd-kit, which a library would obscure, not solve |
 | Hosting | Any static host (Vercel / Netlify / GH Pages) | Output is plain files |
+
+**Phase 3 added no runtime dependency.** Undo/redo, tier bands, dark mode, density, the
+responsive pass, the accessibility work and virtualisation are all built on the rows above.
+
+**No Playwright, and no other browser-automation layer** (decided 2026-08-18, Phase 2). This was
+previously listed as "deferred to a later phase"; it is now **dropped**, so that nobody adds it
+out of a sense of obligation.
+
+The argument for driving a real browser is that `jsdom` — which implements the DOM tree but does
+**no layout**, so `getBoundingClientRect()` returns all zeros — cannot perform a real pointer
+drag. True, but it does not follow that we need one:
+
+- The reordering logic is pure and unit-tested (`domain/board.ts`). The only part a drag adds is
+  translating dnd-kit's player ids into list indices, and that is now the pure, tested
+  `resolveDragMove` rather than untestable code inside the drag handler.
+- Automated browser tests earn their cost through *scale of consequence*: many users, many
+  contributors, regressions nobody notices for a week. This is a single-user board its author
+  opens before every draft. A broken drag is obvious in about one second.
+- Phase 3.7's "no dropped frames while dragging a 400-row board" is a **measurement**, not an
+  assertion. Chrome's Performance panel answers it by hand in two minutes, and gives you a flame
+  chart a passing test never would.
+
+Revisit only if one of those premises changes — a second user, or a performance problem that
+cannot be diagnosed by hand.
 
 ---
 
@@ -168,14 +195,25 @@ fantasy-assist/
 │   │       └── local-json-source.ts # default adapter: static JSON import
 │   ├── domain/                  # pure TS: types + logic, zero React, zero I/O
 │   │   ├── player.ts            # Player, Position, Format
-│   │   ├── board.ts             # reorder, cross-off, availability, tiering
-│   │   └── filters.ts           # position / search predicates
-│   ├── state/                   # Zustand stores + localStorage persistence + undo
+│   │   ├── board.ts             # initialOrder, reconcileOrder, moveInFilteredView, ranks
+│   │   ├── filters.ts           # position / search / availability predicates
+│   │   ├── history.ts           # generic History<T> undo/redo stacks (Phase 3.1)
+│   │   └── tiers.ts             # tierStartIds — where a tier band begins (Phase 3.3)
+│   ├── state/                   # Zustand store + localStorage persistence
+│   │   ├── rankings.ts          # memoized RankingSource accessor — state/'s only @/data import
+│   │   ├── persistence.ts       # schema-versioned localStorage read/write + migrations,
+│   │   │                        #   Theme/Density, serializeState/parseStateJson (3.8)
+│   │   └── board-store.ts       # createBoardStore(storage) + the useBoardStore singleton
 │   ├── features/                # feature-scoped React: component + hooks + styles together
-│   │   ├── board/               # the ranked list, rows, drag handles
-│   │   ├── filters/             # position tabs, search box, availability toggle
-│   │   └── format/              # Redraft PPR ↔ Dynasty SF switcher
-│   ├── ui/                      # generic presentational primitives (Button, Chip, Toast)
+│   │   ├── board/               # board.tsx, player-row.tsx, board-actions.tsx, row-grid.ts,
+│   │   │                        #   board-io.tsx, use-history-shortcuts.ts,
+│   │   │                        #   virtual-window.ts + use-virtual-rows.ts (3.7)
+│   │   ├── filters/             # position-tabs, search-box, availability-toggle
+│   │   ├── format/              # format-switch + format-labels (Redraft PPR ↔ Dynasty SF)
+│   │   └── preferences/         # theme + density toggles, use-apply-preferences (Phase 3.4)
+│   ├── ui/                      # generic presentational primitives (Button, ConfirmButton,
+│   │                            #   ToggleGroup, LiveRegion, useReducedMotion, useMediaQuery)
+│   │                            #   — these must not know what a Player is
 │   ├── app/                     # App shell, layout, providers, routing if it ever appears
 │   └── main.tsx
 └── tests/                       # integration tests; unit tests sit beside their source
@@ -218,6 +256,38 @@ interface BoardState {
 what makes "reset to expert rankings" a one-line operation and keeps dataset refreshes from
 clobbering your edits.
 
+### Persistence (Phase 2, extended in Phase 3)
+
+One `localStorage` key, `fantasy-assist.state`, written only by `src/state/persistence.ts`:
+
+```jsonc
+{
+  "schemaVersion": 2,
+  "activeFormat": "redraft-ppr",
+  "boards": { "redraft-ppr": { "order": [...], "drafted": [...] }, "dynasty-sf": { ... } },
+  "filters": { "position": "ALL", "availableOnly": true },
+  "preferences": { "theme": "system", "density": "comfortable" }
+}
+```
+
+- **`search` is deliberately not persisted.** A search box still holding "mahomes" after a
+  refresh mid-draft hides the board for no reason. Position and availability *are* persisted.
+- **Absent key = normal cold start** (returns `null`). **Present but corrupt = throws**
+  `PersistedStateError` naming the key. There is no silent recovery: quietly discarding a
+  half-valid board would throw away exactly the customization this app exists to keep.
+- **`schemaVersion` is the migration seam**, and Phase 3 exercised it: adding `preferences`
+  bumped the version to `2` via a named, forward-only `migrateV1ToV2`, so a board saved before
+  Phase 3 still loads. An unknown version still throws. Copy that shape for v3 — a migration,
+  never a fallback.
+- **The export file (3.8) *is* this blob.** `serializeState` writes it and `parseStateJson`
+  validates it through the same parse-and-migrate path as `loadPersistedState`, so a backup
+  taken at v1 imports correctly. There is no second serialization format to keep in sync.
+- **Persisted `order` is reconciled against the dataset at load** (`domain/board.ts`
+  `reconcileOrder`): unknown ids dropped, duplicates collapsed, new players inserted at their
+  `baseRank` position, your customization preserved. Without this a dataset refresh would
+  silently corrupt the board. MVP item 4.12 is the full-featured version of this.
+- The store writes through on commit only — never per keystroke and never per drag frame.
+
 ---
 
 ## 6. Conventions
@@ -231,7 +301,13 @@ clobbering your edits.
   a bad dataset should throw loudly at load, not render an empty board.
 - **No TODOs** in committed code.
 - Accessibility is not a later phase: every row is keyboard-reachable, drag has a keyboard
-  equivalent, crossed-off state is conveyed by more than colour.
+  equivalent, crossed-off state is conveyed by more than colour. Since Phase 3.6: colour
+  contrast is **measured, not eyeballed** (AA — 4.5:1 body text, 3:1 large text and UI
+  indicators, in *both* themes) before a token ships, and any state change that happens
+  off-screen or makes a row vanish is announced through `ui/LiveRegion`.
+- **Row height is single-source** (`features/board/row-grid.ts` `resolveRowHeight`). The
+  virtualiser positions rows by arithmetic and CSS paints them; a second place computing a
+  height means overlapping or gapped rows. Never infer it from a padding class.
 
 ---
 
@@ -260,5 +336,9 @@ npm run format      # prettier --write .
   them programmatically as a side effect of another task, and never hand-patch a single player
   (the next regeneration silently reverts it).
 - `LICENSE`.
+- The board's **scroll ownership**: `App.tsx`'s `<Board />` wrapper is `overflow-hidden` and
+  `Board` scrolls its own region internally, because the virtualiser needs a ref to the exact
+  element that scrolls. Changing that wrapper back to `overflow-y-auto` silently breaks
+  windowing — the list will look fine and mount every row.
 - No new top-level directories without flagging it (global rule §Architecture).
 - No network calls to authenticated or paywalled endpoints (§3).

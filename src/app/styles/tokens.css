@@ -36,7 +36,11 @@
   --color-accent: var(--color-accent-600);
   --color-accent-contrast: var(--color-neutral-0);
   --color-danger: #dc2626;
-  --color-success: #16a34a;
+  /* green-600 (#16a34a) measures 3.30:1 on --color-surface — fails WCAG AA's 4.5:1 for the
+     small (text-xs) "vs exp." delta text it colours in player-row.tsx. green-700 clears it:
+     5.02:1 on --color-surface, 4.79:1 on --color-surface-muted. See contrast audit (Phase 3
+     pass 2 report) for the full set of measured ratios. */
+  --color-success: #15803d;
 
   /* --- Spacing scale --- */
   --spacing-xs: 0.25rem;
@@ -73,19 +77,61 @@
 }
 
 /*
- * Dark mode reserved for Phase 3.4 (theme toggle). Tokens defined here so the
- * palette is decided once; nothing wires this up yet.
- *
- * :root[data-theme='dark'] {
- *   --color-surface: var(--color-neutral-900);
- *   --color-surface-muted: var(--color-neutral-800);
- *   --color-border: var(--color-neutral-700);
- *   --color-text-primary: var(--color-neutral-50);
- *   --color-text-muted: var(--color-neutral-400);
- *   --color-accent: var(--color-accent-500);
- *   --color-accent-contrast: var(--color-neutral-950);
- * }
+ * `color-scheme` tells the UA which native rendering (scrollbars, form control chrome,
+ * default focus rings) to use for this root — independent of our own tokens. Phase 3.4.
  */
+:root {
+  color-scheme: light;
+}
+
+/*
+ * Dark palette (Phase 3.4 theme toggle). Activated by `useApplyPreferences` writing
+ * `data-theme="dark"` onto `<html>` — see `src/features/preferences/use-apply-preferences.ts`.
+ * Every semantic token gets an explicit dark value; `--color-danger` and `--color-success`
+ * in particular are NOT reused from the light palette because those hexes are unreadable on
+ * a dark surface (red-600 on neutral-900 measures 3.70:1, green-700 3.56:1 — both fail the
+ * 4.5:1 body-text threshold). Measured ratios (WCAG AA: 4.5:1 body text, 3:1 large text/UI
+ * indicators), against BOTH dark surfaces:
+ *   text-primary  (neutral-50)  on surface        17.06:1 / on surface-muted 13.98:1
+ *   text-muted    (neutral-400) on surface          6.96:1 / on surface-muted  5.71:1
+ *   accent-contrast (neutral-950) on accent (500)    5.48:1
+ *   danger  (red-400)   on surface                   6.45:1 / on surface-muted  5.29:1
+ *   success (green-400) on surface                  10.25:1 / on surface-muted  8.40:1
+ * All clear 4.5:1. `--color-border` stays at the same relative "subtle divider" prominence
+ * as the light theme's neutral-200-on-white (1.23:1) rather than being pulled up to the 3:1
+ * non-text-contrast threshold — it is used only for decorative dividers and card outlines
+ * here, never as the sole cue for an interactive boundary (buttons/inputs already carry a
+ * fill, label, or focus ring). Flagged, not fixed, to avoid a wider re-tuning of the neutral
+ * ramp that borders, dividers, and row separators across three other features all depend on.
+ */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-surface: var(--color-neutral-900);
+  --color-surface-muted: var(--color-neutral-800);
+  --color-border: var(--color-neutral-700);
+  --color-text-primary: var(--color-neutral-50);
+  --color-text-muted: var(--color-neutral-400);
+  --color-accent: var(--color-accent-500);
+  --color-accent-contrast: var(--color-neutral-950);
+  --color-danger: #f87171;
+  --color-success: #4ade80;
+}
+
+/*
+ * MVP 3.2 (motion), CSS half: turns off transitions/animations for anyone who has asked the
+ * OS for reduced motion. This cannot reach dnd-kit's reorder animation, which is driven from
+ * JavaScript, not CSS — `src/ui/use-reduced-motion.ts` is the other half.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 
 body {
   background-color: var(--color-surface-muted);

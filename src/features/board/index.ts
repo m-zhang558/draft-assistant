@@ -1,1 +1,4 @@
-export { PlayerList, type PlayerListProps } from './player-list';
+export { Board } from './board';
+export { PlayerRow, type PlayerRowProps } from './player-row';
+export { BoardActions } from './board-actions';
+export { BoardIO } from './board-io';
