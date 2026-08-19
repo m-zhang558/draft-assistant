@@ -181,7 +181,8 @@ fantasy-assist/
 ├── docs/
 │   ├── MVP-OVERVIEW/
 │   │   └── MVP-OVERVIEW.md      # phased feature plan
-│   └── summary-reports/         # one report per completed phase
+│   ├── plans/                   # forward-looking: what a phase still owes, open questions
+│   └── summary-reports/         # one report per completed phase (what shipped)
 ├── scripts/                     # build-time tooling, never shipped in the bundle
 │   └── fetch-rankings.mjs       # regenerates the datasets (see §3)
 ├── src/
