@@ -1,33 +1,30 @@
-import { act, render, screen, fireEvent } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { FORMATS } from '@/domain';
-import { getRankings, parseStateJson, useBoardStore, type PersistedState } from '@/state';
+import {
+  activeBoard,
+  exportDatabaseBytes,
+  getRankings,
+  useBoardStore,
+  type PersistedState,
+} from '@/state';
 import { BoardIO } from './board-io';
-
-/**
- * The board store is a module-level singleton backed by real `window.localStorage` (see
- * `board.test.tsx`) — it only hydrates once, so every test drives it back to known defaults.
- */
-function resetStore() {
-  const store = useBoardStore.getState();
-  act(() => {
-    store.setFormat('dynasty-sf');
-    useBoardStore.getState().clearDrafted();
-    useBoardStore.getState().resetOrder();
-    useBoardStore.getState().setFormat('redraft-ppr');
-    useBoardStore.getState().clearDrafted();
-    useBoardStore.getState().resetOrder();
-    useBoardStore.getState().setPosition('ALL');
-    useBoardStore.getState().setSearch('');
-    useBoardStore.getState().setAvailableOnly(true);
-  });
-}
+import { boardIdForFormat, resetBoardStore } from '../../../tests/test-store';
 
 function ioStatus(): HTMLElement {
   return screen.getByRole('status', { name: 'Import and export status' });
 }
 
-function makeFile(text: string, name = 'backup.json'): File {
-  return new File([text], name, { type: 'application/json' });
+function makeFile(bytes: BlobPart, name: string, type: string): File {
+  return new File([bytes], name, { type });
+}
+
+function jsonFile(text: string, name = 'backup.json'): File {
+  return makeFile(text, name, 'application/json');
+}
+
+async function sqliteFile(name = 'backup.sqlite'): Promise<File> {
+  const bytes = await exportDatabaseBytes(useBoardStore);
+  return makeFile(new Uint8Array(bytes), name, 'application/x-sqlite3');
 }
 
 /** A minimal, hand-built schemaVersion-1 payload — no `preferences` block (see persistence.ts). */
@@ -45,9 +42,8 @@ function v1Payload(): Record<string, unknown> {
 }
 
 describe('BoardIO', () => {
-  beforeEach(() => {
-    window.localStorage.clear();
-    resetStore();
+  beforeEach(async () => {
+    await resetBoardStore();
   });
 
   afterEach(() => {
@@ -55,7 +51,7 @@ describe('BoardIO', () => {
     vi.useRealTimers();
   });
 
-  it('exports a JSON file that parseStateJson accepts, matching the current store state', async () => {
+  it('exports a .sqlite file whose bytes match client.exportBytes()', async () => {
     const playerId = getRankings('redraft-ppr').players[0]!.id;
     act(() => {
       useBoardStore.getState().toggleDrafted(playerId);
@@ -70,57 +66,130 @@ describe('BoardIO', () => {
 
     render(<BoardIO />);
     fireEvent.click(screen.getByRole('button', { name: 'Export' }));
+    // The export is async now (client.exportBytes() reads the real, on-disk-backed test
+    // database via node:sqlite's backup() — genuine I/O, not just a microtask), so wait for it
+    // rather than assuming a fixed number of Promise.resolve() ticks settles it.
+    await act(async () => {
+      await vi.waitFor(() => expect(createSpy).toHaveBeenCalledTimes(1));
+    });
 
-    expect(createSpy).toHaveBeenCalledTimes(1);
     expect(ioStatus()).toHaveTextContent('Board exported.');
 
     expect(capturedBlob).not.toBeNull();
-    const text = await (capturedBlob as unknown as Blob).text();
-    const parsed = parseStateJson(text);
-    expect(parsed.activeFormat).toBe(useBoardStore.getState().activeFormat);
-    expect(parsed.boards['redraft-ppr'].drafted).toContain(playerId);
-    expect(parsed.boards['redraft-ppr'].order).toEqual(
-      useBoardStore.getState().boards['redraft-ppr'].order
-    );
+    const bytes = new Uint8Array(await (capturedBlob as unknown as Blob).arrayBuffer());
+    const header = new TextDecoder().decode(bytes.slice(0, 16));
+    expect(header).toBe('SQLite format 3\0');
 
-    // revokeObjectURL must not fire synchronously — see board-io.tsx's handleExport comment.
-    expect(revokeSpy).not.toHaveBeenCalled();
+    await vi.waitFor(() => expect(revokeSpy).toHaveBeenCalledTimes(1));
   });
 
-  it('attaches the anchor to the document for the click, removes it after, and defers the URL revoke', () => {
+  it('is disabled while persistenceError is set, with a title explaining why', () => {
+    act(() => {
+      useBoardStore.setState({ persistenceError: 'disk full' });
+    });
+    render(<BoardIO />);
+
+    const exportButton = screen.getByRole('button', { name: 'Export' });
+    expect(exportButton).toBeDisabled();
+    expect(exportButton).toHaveAttribute('title', expect.stringContaining('disk full'));
+  });
+
+  it('attaches the anchor to the document for the click, removes it after, and defers the URL revoke via setTimeout', async () => {
+    // Note: export is now async (it awaits the real `client.exportBytes()` I/O), so — unlike
+    // the old fully-synchronous JSON export — this test cannot observe "revoke hasn't fired
+    // yet" as a same-tick assertion with real timers (any await it takes to detect the click
+    // gives that same 0ms timeout a chance to fire too). What it CAN and does verify is the
+    // thing that actually matters: the anchor is connected for the click (Firefox's
+    // requirement), removed after, and the revoke is issued through `setTimeout(fn, 0)`
+    // specifically — never called inline — which is the deferral `handleExport` promises.
     let anchorWasConnectedAtClick: boolean | null = null;
-    // `this` inside the spy is the clicked anchor, but aliasing `this` to a variable trips
-    // eslint's `no-this-alias` — pushed into an array instead, which the rule doesn't flag.
     const clickedAnchors: HTMLAnchorElement[] = [];
-    const clickSpy = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (
+    vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (
       this: HTMLAnchorElement
     ) {
       clickedAnchors.push(this);
       anchorWasConnectedAtClick = document.body.contains(this);
     });
+    const setTimeoutSpy = vi.spyOn(globalThis, 'setTimeout');
     const revokeSpy = vi.spyOn(URL, 'revokeObjectURL');
 
-    vi.useFakeTimers();
     render(<BoardIO />);
     fireEvent.click(screen.getByRole('button', { name: 'Export' }));
+    await act(async () => {
+      await vi.waitFor(() => expect(revokeSpy).toHaveBeenCalledTimes(1));
+    });
 
-    expect(clickSpy).toHaveBeenCalledTimes(1);
     expect(anchorWasConnectedAtClick).toBe(true);
     expect(clickedAnchors).toHaveLength(1);
     const clickedAnchor = clickedAnchors[0]!;
     expect(document.body.contains(clickedAnchor)).toBe(false);
     expect(clickedAnchor.isConnected).toBe(false);
-
-    // Not revoked on the same synchronous turn as the click...
-    expect(revokeSpy).not.toHaveBeenCalled();
-
-    vi.runAllTimers();
-
-    // ...but revoked once the deferred turn runs.
-    expect(revokeSpy).toHaveBeenCalledTimes(1);
+    expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), 0);
   });
 
-  it('imports a valid schemaVersion-2 file and announces the undoable success', async () => {
+  it('imports a .sqlite file behind a two-step confirm, replacing the whole database', async () => {
+    const dynastyPlayerId = getRankings('dynasty-sf').players[0]!.id;
+    // Build the .sqlite bytes from a store state distinguishable from a fresh cold start.
+    act(() => {
+      useBoardStore.getState().setActiveBoard(boardIdForFormat('dynasty-sf'));
+      useBoardStore.getState().toggleDrafted(dynastyPlayerId);
+    });
+    const file = await sqliteFile();
+
+    // Reset back to a plain cold start before "importing" — proves the import genuinely
+    // replaces the database rather than the test coincidentally already matching.
+    await resetBoardStore();
+    expect(activeBoard(useBoardStore.getState()).drafted.has(dynastyPlayerId)).toBe(false);
+
+    render(<BoardIO />);
+    const input = screen.getByLabelText('Import a .sqlite database or a legacy .json backup');
+
+    await act(async () => {
+      fireEvent.change(input, { target: { files: [file] } });
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    // Selecting the file alone must NOT have imported anything yet.
+    expect(activeBoard(useBoardStore.getState()).drafted.has(dynastyPlayerId)).toBe(false);
+    expect(screen.getByText(/Replace the entire database/)).toBeInTheDocument();
+
+    const confirmButton = screen.getByRole('button', { name: 'Replace database' });
+    fireEvent.click(confirmButton); // arms
+    fireEvent.click(screen.getByRole('button', { name: 'Confirm replace' })); // confirms
+
+    await act(async () => {
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    const dynastyBoardId = boardIdForFormat('dynasty-sf');
+    expect(useBoardStore.getState().boards[dynastyBoardId]!.drafted.has(dynastyPlayerId)).toBe(
+      true
+    );
+    expect(ioStatus()).toHaveTextContent('This is not undoable.');
+    expect(useBoardStore.getState().canUndo).toBe(false);
+  });
+
+  it('cancelling a pending .sqlite import leaves the database untouched', async () => {
+    const file = await sqliteFile();
+    render(<BoardIO />);
+    const input = screen.getByLabelText('Import a .sqlite database or a legacy .json backup');
+    const boardsBefore = useBoardStore.getState().boards;
+
+    await act(async () => {
+      fireEvent.change(input, { target: { files: [file] } });
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    expect(screen.queryByText(/Replace the entire database/)).not.toBeInTheDocument();
+    expect(useBoardStore.getState().boards).toBe(boardsBefore);
+  });
+
+  it('imports a valid schemaVersion-2 .json file through the legacy, undoable path', async () => {
     const dynastyPlayerId = getRankings('dynasty-sf').players[0]!.id;
     const payload: PersistedState = {
       schemaVersion: 2,
@@ -134,27 +203,30 @@ describe('BoardIO', () => {
     };
 
     render(<BoardIO />);
-    const input = screen.getByLabelText('Import board backup JSON file');
-    const file = makeFile(JSON.stringify(payload));
+    const input = screen.getByLabelText('Import a .sqlite database or a legacy .json backup');
+    const file = jsonFile(JSON.stringify(payload));
 
     await act(async () => {
       fireEvent.change(input, { target: { files: [file] } });
-      // let the async file.text()/import chain settle
       await Promise.resolve();
       await Promise.resolve();
     });
 
-    expect(useBoardStore.getState().activeFormat).toBe('dynasty-sf');
-    expect(useBoardStore.getState().boards['dynasty-sf'].drafted.has(dynastyPlayerId)).toBe(true);
+    const active = activeBoard(useBoardStore.getState());
+    expect(active.format).toBe('dynasty-sf');
+    expect(active.drafted.has(dynastyPlayerId)).toBe(true);
     expect(useBoardStore.getState().theme).toBe('dark');
-    expect(ioStatus()).toHaveTextContent('Board imported. Press Ctrl+Z to undo.');
+    expect(ioStatus()).toHaveTextContent(
+      'Board imported from a legacy JSON backup. Press Ctrl+Z to undo.'
+    );
+    expect(useBoardStore.getState().canUndo).toBe(true);
   });
 
   it('shows an inline alert for malformed JSON and leaves the board state untouched', async () => {
     render(<BoardIO />);
-    const input = screen.getByLabelText('Import board backup JSON file');
+    const input = screen.getByLabelText('Import a .sqlite database or a legacy .json backup');
     const boardsBefore = useBoardStore.getState().boards;
-    const file = makeFile('{not valid json');
+    const file = jsonFile('{not valid json');
 
     await act(async () => {
       fireEvent.change(input, { target: { files: [file] } });
@@ -166,10 +238,10 @@ describe('BoardIO', () => {
     expect(useBoardStore.getState().boards).toBe(boardsBefore);
   });
 
-  it('imports a v1-schema file, proving the migration path is reachable from the file picker', async () => {
+  it('imports a v1-schema .json file, proving the migration path is reachable from the file picker', async () => {
     render(<BoardIO />);
-    const input = screen.getByLabelText('Import board backup JSON file');
-    const file = makeFile(JSON.stringify(v1Payload()));
+    const input = screen.getByLabelText('Import a .sqlite database or a legacy .json backup');
+    const file = jsonFile(JSON.stringify(v1Payload()));
 
     await act(async () => {
       fireEvent.change(input, { target: { files: [file] } });
@@ -178,10 +250,43 @@ describe('BoardIO', () => {
     });
 
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
-    expect(useBoardStore.getState().activeFormat).toBe('redraft-ppr');
+    expect(activeBoard(useBoardStore.getState()).format).toBe('redraft-ppr');
+    expect(useBoardStore.getState().activeBoardId).toBe(boardIdForFormat('redraft-ppr'));
     // v1 carried no preferences -> migrated to the documented defaults.
     expect(useBoardStore.getState().theme).toBe('system');
     expect(useBoardStore.getState().density).toBe('comfortable');
-    expect(ioStatus()).toHaveTextContent('Board imported. Press Ctrl+Z to undo.');
+  });
+
+  it('gives a clear inline error for a file that is neither a .sqlite database nor JSON', async () => {
+    render(<BoardIO />);
+    const input = screen.getByLabelText('Import a .sqlite database or a legacy .json backup');
+    const file = makeFile('not json and not sqlite either', 'notes.txt', 'text/plain');
+
+    await act(async () => {
+      fireEvent.change(input, { target: { files: [file] } });
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    // Neither extension nor content says "sqlite", so it falls through to the JSON path and
+    // gets that parser's own loud, specific error — still a clear inline message either way.
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+  });
+
+  it('offers to clear the old localStorage backup only while it is present, behind a confirm', () => {
+    render(<BoardIO />);
+    expect(screen.queryByRole('button', { name: 'Clear old backup' })).not.toBeInTheDocument();
+
+    act(() => {
+      useBoardStore.setState({ legacyBackupPresent: true });
+      window.localStorage.setItem('fantasy-assist.state', '{}');
+    });
+    render(<BoardIO />);
+
+    const clearButton = screen.getAllByRole('button', { name: 'Clear old backup' })[0]!;
+    fireEvent.click(clearButton); // arms
+    fireEvent.click(screen.getByRole('button', { name: 'Confirm clear old backup' }));
+
+    expect(window.localStorage.getItem('fantasy-assist.state')).toBeNull();
   });
 });

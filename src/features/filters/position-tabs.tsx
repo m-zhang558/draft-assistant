@@ -4,11 +4,11 @@
  * — Dynasty Superflex legitimately ranks no K or DST; that is data, not a load failure.
  */
 import { isPosition, POSITION_FILTER_ALL, POSITIONS } from '@/domain';
-import { getRankings, useBoardStore } from '@/state';
+import { activeBoard, getRankings, useBoardStore } from '@/state';
 import { ToggleGroup, type ToggleGroupOption } from '@/ui';
 
 export function PositionTabs() {
-  const activeFormat = useBoardStore((state) => state.activeFormat);
+  const activeFormat = useBoardStore((state) => activeBoard(state).format);
   const position = useBoardStore((state) => state.position);
 
   const { countsByPosition } = getRankings(activeFormat);

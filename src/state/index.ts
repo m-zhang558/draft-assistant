@@ -20,8 +20,14 @@ export {
   type PersistedState,
 } from './persistence';
 export {
+  activeBoard,
   createBoardStore,
+  exportDatabaseBytes,
+  importDatabaseBytes,
+  initialiseAppBoardStore,
+  initialiseBoardStore,
   useBoardStore,
   type BoardSlice,
   type BoardStoreState,
 } from './board-store';
+export { DatabaseError, createBrowserDatabaseClient, type DatabaseClient } from './db';

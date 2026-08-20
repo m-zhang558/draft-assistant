@@ -1,35 +1,23 @@
-import { act, fireEvent, render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { App } from '@/app';
-import { useBoardStore } from '@/state';
+import { resetBoardStore } from './test-store';
 
 /**
- * End-to-end coverage of Phase 2: format switch, position tabs, search, availability,
- * reorder, and the two confirmed reset actions, wired together through the real `App`.
- *
- * The board store is a module-level singleton backed by real `window.localStorage`
- * (contract §5) that hydrates once at module load, so `localStorage.clear()` alone does
- * not reset in-memory state between tests in this file — each test drives the store back
- * to known defaults for BOTH formats first.
+ * End-to-end coverage of Phase 2/3/4's interaction surface: board switch, position tabs,
+ * search, availability, reorder, and the two confirmed reset actions, wired together through
+ * the real `App`. Each test re-initialises the singleton store from a fresh cold-start database
+ * (`resetBoardStore`), so it starts from the same two-board, nothing-drafted state every time.
  */
-function resetStore() {
-  act(() => {
-    useBoardStore.getState().setFormat('dynasty-sf');
-    useBoardStore.getState().clearDrafted();
-    useBoardStore.getState().resetOrder();
-    useBoardStore.getState().setFormat('redraft-ppr');
-    useBoardStore.getState().clearDrafted();
-    useBoardStore.getState().resetOrder();
-    useBoardStore.getState().setPosition('ALL');
-    useBoardStore.getState().setSearch('');
-    useBoardStore.getState().setAvailableOnly(true);
-  });
+async function switchToBoard(user: ReturnType<typeof userEvent.setup>, boardName: RegExp) {
+  const select = screen.getByLabelText('Board');
+  const option = within(select).getByRole('option', { name: boardName });
+  await user.selectOptions(select, option);
 }
 
 describe('board integration', () => {
-  beforeEach(() => {
-    window.localStorage.clear();
-    resetStore();
+  beforeEach(async () => {
+    await resetBoardStore();
   });
 
   it('crosses a player off, hides them under Available only, and restores them under Show all', async () => {
@@ -61,7 +49,7 @@ describe('board integration', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('radio', { name: 'Dynasty Superflex' }));
+    await switchToBoard(user, /Dynasty Superflex/);
 
     expect(screen.getByRole('radio', { name: 'K' })).toBeDisabled();
     expect(screen.getByRole('radio', { name: 'DST' })).toBeDisabled();
@@ -133,19 +121,19 @@ describe('board integration', () => {
     expect(screen.getByRole('button', { name: 'Mark Jahmyr Gibbs drafted' })).toBeInTheDocument();
   });
 
-  it("keeps each format's drafted state independent when switching formats", async () => {
+  it("keeps each board's drafted state independent when switching boards", async () => {
     const user = userEvent.setup();
     render(<App />);
 
     await user.click(screen.getByRole('button', { name: 'Mark Jahmyr Gibbs drafted' }));
 
-    await user.click(screen.getByRole('radio', { name: 'Dynasty Superflex' }));
+    await switchToBoard(user, /Dynasty Superflex/);
     const searchBox = screen.getByLabelText('Search players by name or team');
     await user.type(searchBox, 'Jahmyr Gibbs');
     expect(screen.getByRole('button', { name: 'Mark Jahmyr Gibbs drafted' })).toBeInTheDocument();
 
-    await user.click(screen.getByRole('radio', { name: 'Redraft PPR' }));
-    // Still drafted in this format, so Available-only (the default) now hides him here too —
+    await switchToBoard(user, /Redraft PPR/);
+    // Still drafted on this board, so Available-only (the default) now hides him here too —
     // switch it off to confirm the drafted state itself survived the round trip.
     await user.click(screen.getByLabelText('Available only'));
     expect(screen.getByRole('button', { name: 'Mark Jahmyr Gibbs available' })).toBeInTheDocument();

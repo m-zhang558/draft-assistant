@@ -35,6 +35,15 @@
  *
  * Drafted state is conveyed by text decoration (line-through) and `aria-pressed` on the
  * toggle — never by colour alone.
+ *
+ * Watch star (MVP 4.8), note (MVP 4.7) and tier-break (MVP 4.9) added in Stage D — see
+ * `row-grid.ts`'s "Row information hierarchy" note for why they sit where they do. All three
+ * convey their state by glyph shape (★/☆, ✎/✎•, ▪/▭) plus `aria-pressed`/`aria-label`, never by
+ * colour alone.
+ *
+ * `isNarrow` (Stage E): below `sm`, the note button and tier-break button are replaced by a
+ * single `RowOverflowMenu` — never rendered alongside them — see `row-grid.ts`'s file header for
+ * why that swap is a JS conditional rather than a second `NARROW_HIDDEN` CSS-hidden copy.
  */
 import { memo, type CSSProperties, type KeyboardEvent } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
@@ -42,6 +51,8 @@ import { CSS } from '@dnd-kit/utilities';
 import type { Player } from '@/domain';
 import { useReducedMotion } from '@/ui';
 import { NARROW_HIDDEN, ROW_GRID } from './row-grid';
+import { PlayerNote } from './player-note';
+import { RowOverflowMenu } from './row-overflow';
 
 export interface PlayerRowProps {
   player: Player;
@@ -50,25 +61,53 @@ export interface PlayerRowProps {
   /** baseRank - yourRank: positive = promoted, negative = demoted, 0 = unmoved. */
   delta: number;
   drafted: boolean;
+  /** MVP 4.8: on the user's watchlist. */
+  watched: boolean;
+  /** MVP 4.7: this player's note, or `undefined` for none. */
+  note: string | undefined;
+  /** MVP 4.9: whether THIS player is one of the board's own custom tier-break marks — distinct
+   * from `isTierStart`, which reflects whichever set (custom or the source's) is currently in
+   * effect. */
+  hasTierBreak: boolean;
   /** This row's position within the (filtered, ordered) visible list — for absolute placement. */
   index: number;
   /** Fixed row height in CSS px; must match the virtualiser's arithmetic (`row-grid.ts`). */
   rowHeight: number;
+  /** Below `sm`: swaps the direct note/tier-break controls for a single `RowOverflowMenu`
+   * (Stage E). Computed once in `board.tsx` via `ui/useMediaQuery(NARROW_QUERY)` — the same
+   * source of truth `resolveRowHeight` already uses, so this can never disagree with the CSS
+   * breakpoint the row's own grid template branches on. */
+  isNarrow: boolean;
   /** True when this row starts a new tier band (MVP 3.3). Never true and untiered together. */
   isTierStart: boolean;
   /** `id` of the single shared keyboard-move instructions paragraph rendered once by Board. */
   instructionsId: string;
   onToggleDrafted: (playerId: string) => void;
   onMove: (playerId: string, direction: -1 | 1) => void;
+  onToggleWatched: (playerId: string) => void;
+  onSetNote: (playerId: string, note: string) => void;
+  onToggleTierBreak: (playerId: string) => void;
 }
 
-function buildRowLabel(player: Player, rank: number, drafted: boolean): string {
+function buildRowLabel(
+  player: Player,
+  rank: number,
+  drafted: boolean,
+  watched: boolean,
+  hasNote: boolean
+): string {
   const segments = [`${player.name}, rank ${rank}`, player.position, player.team];
   if (player.byeWeek !== undefined) {
     segments.push(`bye ${player.byeWeek}`);
   }
   if (player.tier !== undefined) {
     segments.push(`tier ${player.tier}`);
+  }
+  if (watched) {
+    segments.push('watchlisted');
+  }
+  if (hasNote) {
+    segments.push('has a note');
   }
   if (drafted) {
     segments.push('drafted');
@@ -81,12 +120,19 @@ function PlayerRowComponent({
   rank,
   delta,
   drafted,
+  watched,
+  note,
+  hasTierBreak,
   index,
   rowHeight,
+  isNarrow,
   isTierStart,
   instructionsId,
   onToggleDrafted,
   onMove,
+  onToggleWatched,
+  onSetNote,
+  onToggleTierBreak,
 }: PlayerRowProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: player.id,
@@ -126,7 +172,7 @@ function PlayerRowComponent({
       style={style}
       tabIndex={0}
       onKeyDown={handleKeyDown}
-      aria-label={buildRowLabel(player, rank, drafted)}
+      aria-label={buildRowLabel(player, rank, drafted, watched, note !== undefined && note !== '')}
       aria-describedby={instructionsId}
       className={[
         ROW_GRID,
@@ -148,6 +194,17 @@ function PlayerRowComponent({
       >
         ⠿
       </button>
+      <button
+        type="button"
+        aria-pressed={watched}
+        aria-label={
+          watched ? `Remove ${player.name} from watchlist` : `Add ${player.name} to watchlist`
+        }
+        onClick={() => onToggleWatched(player.id)}
+        className="rounded p-1 text-base leading-none text-text-muted hover:bg-surface-muted aria-pressed:text-accent"
+      >
+        {watched ? '★' : '☆'}
+      </button>
       <span className="font-mono text-text-primary">{rank}</span>
       <span className={drafted ? 'truncate line-through' : 'truncate'}>{player.name}</span>
       <span className="text-xs font-medium text-text-muted">{player.position}</span>
@@ -162,6 +219,42 @@ function PlayerRowComponent({
       <span className={`text-xs font-medium ${NARROW_HIDDEN} ${deltaColorClass}`}>
         {deltaLabel ?? ''}
       </span>
+      {isNarrow ? (
+        <RowOverflowMenu
+          className="relative"
+          playerId={player.id}
+          playerName={player.name}
+          note={note}
+          onSetNote={onSetNote}
+          hasTierBreak={hasTierBreak}
+          onToggleTierBreak={onToggleTierBreak}
+        />
+      ) : (
+        <>
+          <PlayerNote
+            className="relative"
+            playerId={player.id}
+            playerName={player.name}
+            note={note}
+            onCommit={onSetNote}
+          />
+          <span>
+            <button
+              type="button"
+              aria-pressed={hasTierBreak}
+              aria-label={
+                hasTierBreak
+                  ? `Remove tier break at ${player.name}`
+                  : `Start a tier at ${player.name}`
+              }
+              onClick={() => onToggleTierBreak(player.id)}
+              className="rounded p-1 text-xs font-medium leading-none text-text-muted hover:bg-surface-muted aria-pressed:text-accent"
+            >
+              {hasTierBreak ? '▪' : '▭'}
+            </button>
+          </span>
+        </>
+      )}
       <button
         type="button"
         aria-pressed={drafted}

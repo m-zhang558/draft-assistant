@@ -226,6 +226,27 @@ cheap, and off the interaction path.
 | 4.12 | Dataset refresh | Reconcile a refreshed dataset against your edits: new players inserted at `baseRank`, retired players dropped, your ordering preserved |
 | 4.13 | Export / import | Supersedes 3.8 — export the raw `.sqlite` file, which is a complete, portable, inspectable backup |
 
+> **Done (2026-08-19) — see `docs/summary-reports/phase-4-sqlite-persistence.md`.** All thirteen
+> items shipped; 405 tests pass; `typecheck`, `lint`, `build` and `prettier` are clean.
+> **The gate below was not met** — this phase was built on explicit instruction, before any live
+> draft, so open question 6 is still genuinely open and is carried forward in
+> `docs/plans/phase-4-remaining.md` §3.1. Six things a later phase needs to know:
+>
+> - **The VFS premise was proven before anything was built on it.** `opfs-sahpool` bundles under
+>   Vite 7 with no COOP/COEP headers, so GitHub Pages survives. The wasm (864 kB) and worker
+>   (224 kB) are separate assets; the entry chunk contains zero sqlite symbols.
+> - **The SQL is separated from the worker so it can be tested.** `SqlExecutor` is the seam, every
+>   query lives in `repository.ts`, and the tests run a REAL engine (`node:sqlite`) rather than a
+>   mock. `worker.ts` is 149 lines with no SQL — that is the entire untestable surface.
+> - **`sort_order` is `REAL` and the arithmetic is pure** (`domain/fractional-order.ts`). One drag
+>   is one `UPDATE`; `needsRenormalisation` guards the bisection limit with a ~30-split margin.
+> - **Boot gates once and nothing else awaits.** OPFS-unavailable is a hard error, never a fallback
+>   to `localStorage`. A failed write shows a banner and does NOT roll memory back.
+> - **The `localStorage` key is never cleared automatically** and `state/persistence.ts` is still
+>   live code — it is the 4.4 migration source and the legacy `.json` import path.
+> - **Nothing has been verified in a real browser.** OPFS persistence across a reload — the phase's
+>   central claim — is untested. See `docs/plans/phase-4-remaining.md` §1.
+
 ### Risks to weigh before starting
 
 - **Bundle cost.** The SQLite WASM binary is roughly 800 KB–1 MB before compression, against a
@@ -257,13 +278,14 @@ Not planned. Recorded so they don't get invented mid-build.
 ```
 Phase 0 ──▶ Phase 1 ──▶ Phase 2 ──▶ Phase 3 ──▶ Phase 4 ──▶ Phase 5
 foundation   data        core         polish      sqlite +   speculative
-  done        done        done         done       extras
-                          ▲             ▲
-                    MVP is usable   MVP COMPLETE ──▶ next step is using it in a
-                    from here       (2026-08-18)     real draft, not building 4
-                                                ▲
-                                        storage engine swaps here,
-                                        behind the state/ boundary
+  done        done        done         done        extras     not planned
+                          ▲             ▲            done
+                    MVP is usable   MVP COMPLETE   (2026-08-19)
+                    from here       (2026-08-18)      ▲
+                                                      │
+                                    built on instruction, BEFORE the real draft
+                                    this phase was gated on — see open question 6.
+                                    Next step is still: use it in a real draft.
 ```
 
 Nothing in Phases 2–3 can start before Phase 1's domain types exist. Within Phase 2, 2.1–2.2

@@ -55,7 +55,10 @@ Single persona: **you, mid-draft.** Everything is optimized for that moment.
 | Pick made by someone else | Every ~60s | One click to cross off; player greys out and drops out of "available" |
 | Your turn | Every ~10 picks | Glance at top of filtered list, take the name, cross it off |
 | Wrong click | Rare, urgent | Undo restores state immediately |
-| Format switch | Between drafts | Toggle Redraft PPR ↔ Dynasty SF; each format keeps its own edits |
+| Board switch | Between drafts | Pick a saved board; each keeps its own order, drafted set, notes, watchlist and tiers |
+| Note to self | Pre-draft / mid-draft | "hamstring, monitor Thursday" on a row, without leaving the board |
+| Watchlist | Pre-draft | Star your targets, then filter to just them |
+| "Who's thin?" | Mid-draft | Scarcity panel: how many are left at each position, and in the top tier |
 
 ---
 
@@ -139,13 +142,28 @@ say so.
 | Styling | Tailwind CSS v4 | Utility-first; keeps the design tokens in one place |
 | Drag & drop | `@dnd-kit/core` + `@dnd-kit/sortable` | Accessible (keyboard reorder), no legacy HTML5 DnD quirks |
 | State | Zustand | Small store, no boilerplate, easy to snapshot for undo |
-| Persistence | `localStorage` (JSON) | No server; survives refresh; trivially exportable |
+| Persistence | SQLite — `@sqlite.org/sqlite-wasm` on the **`opfs-sahpool`** VFS, in a Web Worker | Phase 4. Relational, generous quota, and needs **no COOP/COEP headers**, so GitHub Pages stays a hosting target |
+| Legacy persistence | `localStorage` (JSON) | Phases 0–3's store. Still live code: the Phase 4.4 migration source and the legacy `.json` import path |
+| SQL engine in tests | `node:sqlite` (`DatabaseSync`, Node 22 builtin) | Real SQLite for `repository`/`schema` tests without OPFS. Test-only — never shipped |
 | Tests | Vitest + React Testing Library | Unit + component. No browser-automation layer — see below |
 | Virtualisation | Hand-rolled (`features/board/virtual-window.ts`) | ~100 lines of fixed-height windowing; the hard part is where it meets dnd-kit, which a library would obscure, not solve |
 | Hosting | Any static host (Vercel / Netlify / GH Pages) | Output is plain files |
 
 **Phase 3 added no runtime dependency.** Undo/redo, tier bands, dark mode, density, the
 responsive pass, the accessibility work and virtualisation are all built on the rows above.
+
+**Phase 4 added exactly one:** `@sqlite.org/sqlite-wasm`. It is loaded *inside the worker*, so the
+864 kB wasm binary and the 224 kB worker chunk are separate assets fetched off the first-paint
+path — the entry chunk does not contain a single sqlite symbol. Verify that with a `grep` of
+`dist/assets/index-*.js` after any change to `state/db/`, because a stray main-thread import of the
+package would silently move ~1 MB onto the critical path.
+
+**The VFS is not interchangeable.** `opfs` (the standard one) requires COOP/COEP response headers
+for `SharedArrayBuffer`, and GitHub Pages cannot set headers — choosing it would silently drop a
+hosting target this file promises. `kvvfs` is `localStorage` with SQL overhead on top.
+`opfs-sahpool` needs no headers and is the fastest of the three; its single-connection,
+no-multi-tab limitation is irrelevant for a single-user board. Do not change it without
+re-arguing that table.
 
 **No Playwright, and no other browser-automation layer** (decided 2026-08-18, Phase 2). This was
 previously listed as "deferred to a later phase"; it is now **dropped**, so that nobody adds it
@@ -199,18 +217,36 @@ fantasy-assist/
 │   │   ├── board.ts             # initialOrder, reconcileOrder, moveInFilteredView, ranks
 │   │   ├── filters.ts           # position / search / availability predicates
 │   │   ├── history.ts           # generic History<T> undo/redo stacks (Phase 3.1)
-│   │   └── tiers.ts             # tierStartIds — where a tier band begins (Phase 3.3)
-│   ├── state/                   # Zustand store + localStorage persistence
+│   │   ├── tiers.ts             # tierStartIds (3.3) + resolveTierStarts / custom tiers (4.9)
+│   │   ├── boards.ts            # BoardMeta, name validation, nextBoardName (4.6)
+│   │   ├── fractional-order.ts  # keyBetween / needsRenormalisation / renormalise (4.5)
+│   │   ├── dataset-refresh.ts   # reconcileWithReport — what changed and why (4.12)
+│   │   ├── scarcity.ts          # per-position remaining counts (4.10)
+│   │   └── bye-weeks.ts         # bye collisions among drafted players (4.11)
+│   ├── state/                   # Zustand store + ALL persistence
+│   │   ├── db/                  # the SQLite layer (Phase 4) — see its own note below
+│   │   │   ├── sql-executor.ts      # the seam: all/run/transaction + DatabaseError
+│   │   │   ├── schema.ts            # forward-only MIGRATIONS as data
+│   │   │   ├── commands.ts          # the DbCommand discriminated union
+│   │   │   ├── repository.ts        # EVERY query in the app, against SqlExecutor
+│   │   │   ├── protocol.ts          # worker message types + pure handleRequest
+│   │   │   ├── client.ts            # main-thread proxy: postMessage + id correlation
+│   │   │   ├── worker.ts            # sqlite3 + opfs-sahpool bootstrap. NO SQL LIVES HERE
+│   │   │   └── *.test-support.ts    # node:sqlite executor + in-process client, tests only
 │   │   ├── rankings.ts          # memoized RankingSource accessor — state/'s only @/data import
-│   │   ├── persistence.ts       # schema-versioned localStorage read/write + migrations,
-│   │   │                        #   Theme/Density, serializeState/parseStateJson (3.8)
-│   │   └── board-store.ts       # createBoardStore(storage) + the useBoardStore singleton
+│   │   ├── persistence.ts       # LEGACY localStorage read/write + v1→v2 migration; now the
+│   │   │                        #   4.4 migration source and the legacy .json import path
+│   │   ├── migrate-local-storage.ts # one-time, non-destructive localStorage → SQLite (4.4)
+│   │   └── board-store.ts       # createBoardStore() + initialiseBoardStore() + the singleton
 │   ├── features/                # feature-scoped React: component + hooks + styles together
 │   │   ├── board/               # board.tsx, player-row.tsx, board-actions.tsx, row-grid.ts,
 │   │   │                        #   board-io.tsx, use-history-shortcuts.ts,
-│   │   │                        #   virtual-window.ts + use-virtual-rows.ts (3.7)
-│   │   ├── filters/             # position-tabs, search-box, availability-toggle
-│   │   ├── format/              # format-switch + format-labels (Redraft PPR ↔ Dynasty SF)
+│   │   │                        #   virtual-window.ts + use-virtual-rows.ts (3.7),
+│   │   │                        #   player-note.tsx (4.7), row-overflow.tsx,
+│   │   │                        #   dataset-refresh-banner.tsx (4.12)
+│   │   ├── boards/              # board-switch, board-manager, format-labels (4.6)
+│   │   ├── filters/             # position-tabs, search-box, availability-toggle, watched (4.8)
+│   │   ├── insights/            # scarcity-panel (4.10), bye-week-panel (4.11) — read-only views
 │   │   └── preferences/         # theme + density toggles, use-apply-preferences (Phase 3.4)
 │   ├── ui/                      # generic presentational primitives (Button, ConfirmButton,
 │   │                            #   ToggleGroup, LiveRegion, useReducedMotion, useMediaQuery)
@@ -224,7 +260,12 @@ fantasy-assist/
 
 - `domain/` is pure and synchronous. If it imports React or touches `window`, it's in the
   wrong layer. This is what makes the ranking logic testable without a DOM.
-- `state/` is the only place that talks to `localStorage`.
+- `state/` is the only place that talks to storage — SQLite *and* `localStorage`.
+- **`state/db/`'s seam is `SqlExecutor`, not the worker.** Every query lives in `repository.ts`
+  written against that interface, which is why `node:sqlite` can exercise it for real in the test
+  suite. `worker.ts` is a bootstrap and a `switch`: it holds no SQL text and no business rules, and
+  it is the ONLY file in the project outside the test suite's reach. Putting a query there puts it
+  outside the tests — that is the one rule this layer has.
 - `features/` may import `domain`, `state`, and `ui`. `ui/` imports none of them — a `ui/`
   component that knows what a Player is has leaked.
 - New top-level directories require justification in your response, per the global rules.
@@ -246,50 +287,88 @@ interface Player {
   age?: number;          // dynasty-relevant
 }
 
-interface BoardState {
-  format: Format;
-  order: string[];       // player ids — YOUR ranking; the source of truth for display
-  drafted: Set<string>;  // crossed-off player ids
+// Phase 4: a board is a named, user-created thing with a format, not one-per-format.
+interface BoardSlice {
+  id: string; name: string; format: Format; createdAt: string;
+  order: string[];                 // player ids — YOUR ranking; the source of truth for display
+  sortKeys: Map<string, number>;   // fractional keys, so a drag is ONE database UPDATE (4.5)
+  drafted: Set<string>;            // crossed-off player ids
+  watched: Set<string>;            // 4.8
+  notes: Map<string, string>;      // 4.7
+  tierBreaks: Set<string>;         // 4.9 — ids that START a custom tier
 }
 ```
+
+The store holds `boards: Record<string, BoardSlice>` keyed by **board id**, plus `boardIds` and
+`activeBoardId`. `activeBoard(state)` is the selector — there is no `state.activeFormat` any more;
+a format is a property of a board.
 
 `baseRank` is immutable; user customization lives entirely in `order`. That separation is
 what makes "reset to expert rankings" a one-line operation and keeps dataset refreshes from
 clobbering your edits.
 
-### Persistence (Phase 2, extended in Phase 3)
+### Persistence (Phase 4: SQLite; Phases 0–3's `localStorage` is now legacy)
 
-One `localStorage` key, `fantasy-assist.state`, written only by `src/state/persistence.ts`:
+**The live store is a SQLite database** in a Web Worker on the `opfs-sahpool` VFS, written only by
+`src/state/db/`. Its schema is at version 1 and lives in `schema.ts` as forward-only migration
+data:
 
-```jsonc
-{
-  "schemaVersion": 2,
-  "activeFormat": "redraft-ppr",
-  "boards": { "redraft-ppr": { "order": [...], "drafted": [...] }, "dynasty-sf": { ... } },
-  "filters": { "position": "ALL", "availableOnly": true },
-  "preferences": { "theme": "system", "density": "comfortable" }
-}
+```sql
+board        (id TEXT PK, name, format CHECK(...), created_at)
+board_player (board_id REFERENCES board ON DELETE CASCADE, player_id,
+              sort_order REAL, drafted, watched, tier_break, note,
+              PRIMARY KEY (board_id, player_id))
+app_setting  (key TEXT PK, value TEXT)   -- activeBoardId, theme, density, the filters
+schema_version (version INTEGER)
 ```
 
-- **`search` is deliberately not persisted.** A search box still holding "mahomes" after a
-  refresh mid-draft hides the board for no reason. Position and availability *are* persisted.
-- **Absent key = normal cold start** (returns `null`). **Present but corrupt = throws**
-  `PersistedStateError` naming the key. There is no silent recovery: quietly discarding a
-  half-valid board would throw away exactly the customization this app exists to keep.
-- **`schemaVersion` is the migration seam**, and Phase 3 exercised it: adding `preferences`
-  bumped the version to `2` via a named, forward-only `migrateV1ToV2`, so a board saved before
-  Phase 3 still loads. An unknown version still throws. Copy that shape for v3 — a migration,
-  never a fallback.
-- **The export file (3.8) *is* this blob.** `serializeState` writes it and `parseStateJson`
-  validates it through the same parse-and-migrate path as `loadPersistedState`, so a backup
-  taken at v1 imports correctly. There is no second serialization format to keep in sync.
-- **Persisted `order` is reconciled against the dataset at load** (`domain/board.ts`
-  `reconcileOrder`): unknown ids dropped, duplicates collapsed, new players inserted at their
-  `baseRank` position, your customization preserved. Without this a dataset refresh would
-  silently corrupt the board. MVP item 4.12 is the full-featured version of this.
-- The store writes through on commit only — never per keystroke and never per drag frame.
+- **`PRAGMA foreign_keys = ON` is set and verified at open time.** SQLite defaults it *off*, which
+  makes the `ON DELETE CASCADE` above silently inert. `migrate` throws if the pragma did not take.
+- **`sort_order` is `REAL`, not a dense integer, and that is load-bearing.** Dragging a player from
+  rank 400 to rank 2 is ONE `UPDATE` — the midpoint of its two new neighbours — instead of ~398.
+  The arithmetic is pure and lives in `domain/fractional-order.ts`; `needsRenormalisation` is the
+  guard callers run *before* `keyBetween`, escalating to a whole-board rewrite when a gap closes.
+  Never replace this with integer ranks to "simplify" it.
+- **Schema changes are a NEW migration version**, never an edit to v1. A database written by a
+  *newer* app throws rather than being downgraded.
+- **`search` is still deliberately not persisted.** A search box still holding "mahomes" after a
+  refresh mid-draft hides the board for no reason. Position, availability and watched-only are.
 
----
+**The async boundary (4.3) has three rules, in priority order:**
+
+1. **Boot gates once, explicitly.** `createBoardStore()` builds an inert `status: 'loading'` store
+   synchronously — no client, no I/O, safe in `jsdom`. `initialiseBoardStore()` does the async
+   work and `App` gates on `status`. "The UI must never await a query to paint a row" is about the
+   interaction path; gating the *first* paint is what stops a user editing a board that hydration
+   is about to overwrite.
+2. **Reads never touch the database after boot.** `load()` returns every board and setting in one
+   message; the UI reads the store synchronously, exactly as in Phase 3.
+3. **Writes are fire-and-forget with a visible failure.** A rejected command sets
+   `persistenceError` and `App` shows a `role="alert"` banner. Memory is deliberately **not**
+   rolled back — silently reverting a user's edit under them is worse than a visible "not saved".
+
+**OPFS unavailable is a hard failure.** Private browsing surfaces as `status: 'error'`. There is no
+fallback to `localStorage`: a silent downgrade means a board that quietly stops persisting, which
+is the worst outcome available.
+
+**The legacy `localStorage` key (`fantasy-assist.state`, `schemaVersion` 2, frozen).**
+`src/state/persistence.ts` is still live code, for exactly two jobs: it is the 4.4 migration source
+and the legacy `.json` import path. Its rules still apply where it is used — absent key = normal
+cold start, present-but-corrupt = throws `PersistedStateError` naming the key.
+
+- **The 4.4 migration is one-time and non-destructive: the key is NEVER cleared automatically.**
+  It parses through the *existing* `loadPersistedState`, so the v1→v2 migration is inherited free
+  with no second parser to drift. Clearing it is a user action behind a confirm in `board-io.tsx`.
+  One documented exception to fail-fast: a *corrupt* legacy key is downgraded to a
+  `persistenceError` banner rather than blocking boot — it is a backup nobody is reading, not the
+  live store.
+- **Export (4.13) is the raw `.sqlite` byte image**, which supersedes 3.8's JSON. Import still
+  accepts both, so a Phase 3.8 backup is not orphaned. Because OPFS is not user-inspectable, this
+  export is the *only* hand-recovery path — treat it as load-bearing, not a nicety.
+- **Persisted order is reconciled against the dataset at every boot** (`domain/dataset-refresh.ts`
+  `reconcileWithReport`): unknown ids dropped, duplicates collapsed, new players inserted at their
+  `baseRank`. Removed players take their notes, watchlist flags and tier breaks with them, which is
+  why 4.12 *reports* the reconcile in a banner instead of doing it silently.
 
 ## 6. Conventions
 
@@ -308,7 +387,18 @@ One `localStorage` key, `fantasy-assist.state`, written only by `src/state/persi
   off-screen or makes a row vanish is announced through `ui/LiveRegion`.
 - **Row height is single-source** (`features/board/row-grid.ts` `resolveRowHeight`). The
   virtualiser positions rows by arithmetic and CSS paints them; a second place computing a
-  height means overlapping or gapped rows. Never infer it from a padding class.
+  height means overlapping or gapped rows. Never infer it from a padding class. Since Phase 4 the
+  row also carries a star, a note and a tier-break control: anything new added to a row must be an
+  absolutely-positioned overlay or a narrow-width swap, never something that changes row height.
+- **A feature must not simply disappear below a breakpoint.** Hiding a *text column* at 375px is
+  fine; hiding a *control* means the feature does not exist on a phone, which §3.5 and the
+  accessibility rule both forbid. Collapse it into the row-overflow menu instead. Prefer a JS
+  conditional over a CSS-hidden duplicate — two mounted controls sharing an accessible name are
+  ambiguous to assistive tech and to a `jsdom` test query, which applies no stylesheet.
+- **Test against a real SQL engine, not a mock.** `state/db/*.test.ts` and every store/component
+  test boot through `db/*.test-support.ts`, which is `node:sqlite` behind the `SqlExecutor`
+  interface. A mock executor would fake exactly the behaviour most likely to be wrong — this is
+  how the `ON DELETE CASCADE`, transaction-rollback and journal-sibling-file bugs were caught.
 
 ---
 
@@ -343,3 +433,14 @@ npm run format      # prettier --write .
   windowing — the list will look fine and mount every row.
 - No new top-level directories without flagging it (global rule §Architecture).
 - No network calls to authenticated or paywalled endpoints (§3).
+- **`src/state/db/worker.ts` must never contain SQL or business rules.** It is the only file the
+  test suite cannot reach; every line added to it is a line nothing verifies. Queries go in
+  `repository.ts` behind `SqlExecutor`.
+- **Never import `@sqlite.org/sqlite-wasm` from the main thread.** It is worker-only by design, and
+  a main-thread import silently moves ~1 MB of wasm onto the first-paint path. Check with
+  `grep -c sqlite3InitModule dist/assets/index-*.js` (must be 0) after touching `state/db/`.
+- **The `opfs-sahpool` VFS choice** — see §4. Changing it to `opfs` requires COOP/COEP headers and
+  silently drops GitHub Pages as a hosting target.
+- **The legacy `localStorage` key is never cleared programmatically** as a side effect of anything.
+  It is a user action behind a confirm. Until someone has verified OPFS persistence by hand
+  (`docs/plans/phase-4-remaining.md` §1.1), it is also the only rollback path.

@@ -2,27 +2,9 @@ import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useBoardStore } from '@/state';
 import { Board } from './board';
-
-/**
- * The board store is a module-level singleton backed by real `window.localStorage`
- * (see phase2-contract.md §5). `localStorage.clear()` alone does not reset it between
- * tests in this file, because it only hydrates once at module load — so every test
- * explicitly drives it back to known defaults for BOTH formats.
- */
-function resetStore() {
-  const store = useBoardStore.getState();
-  act(() => {
-    store.setFormat('dynasty-sf');
-    useBoardStore.getState().clearDrafted();
-    useBoardStore.getState().resetOrder();
-    useBoardStore.getState().setFormat('redraft-ppr');
-    useBoardStore.getState().clearDrafted();
-    useBoardStore.getState().resetOrder();
-    useBoardStore.getState().setPosition('ALL');
-    useBoardStore.getState().setSearch('');
-    useBoardStore.getState().setAvailableOnly(true);
-  });
-}
+import { NARROW_QUERY } from './row-grid';
+import { boardIdForFormat, resetBoardStore } from '../../../tests/test-store';
+import { setMatchMediaQuery } from '../../../tests/setup';
 
 /**
  * dnd-kit renders its own `role="status"` live region alongside ours (`@/ui`'s `LiveRegion`),
@@ -40,9 +22,11 @@ function getBoardLiveRegion(): HTMLElement {
 }
 
 describe('Board', () => {
-  beforeEach(() => {
-    window.localStorage.clear();
-    resetStore();
+  beforeEach(async () => {
+    // The `matchMedia` shim (tests/setup.ts) keeps its match state per query string across
+    // tests — reset to "wide" so a narrow-width test never leaks into the next one.
+    setMatchMediaQuery(NARROW_QUERY, false);
+    await resetBoardStore();
   });
 
   it('renders visible players ordered by rank, starting from the top of the board', () => {
@@ -198,7 +182,7 @@ describe('Board', () => {
 
   it('shows a position-specific empty state when the format does not rank that position', () => {
     act(() => {
-      useBoardStore.getState().setFormat('dynasty-sf');
+      useBoardStore.getState().setActiveBoard(boardIdForFormat('dynasty-sf'));
       useBoardStore.getState().setPosition('K');
     });
 
@@ -228,5 +212,193 @@ describe('Board', () => {
     render(<Board />);
 
     expect(screen.getByText('No players match "zzznotarealplayerzzz".')).toBeInTheDocument();
+  });
+
+  it('toggles watchlist status via the star, conveyed by glyph and aria-pressed (not colour alone), and announces it (MVP 4.8)', async () => {
+    const user = userEvent.setup();
+    render(<Board />);
+
+    const outlineStar = screen.getByRole('button', { name: 'Add Jahmyr Gibbs to watchlist' });
+    expect(outlineStar).toHaveAttribute('aria-pressed', 'false');
+    expect(outlineStar).toHaveTextContent('☆');
+
+    await user.click(outlineStar);
+
+    const filledStar = screen.getByRole('button', { name: 'Remove Jahmyr Gibbs from watchlist' });
+    expect(filledStar).toHaveAttribute('aria-pressed', 'true');
+    expect(filledStar).toHaveTextContent('★');
+    expect(getBoardLiveRegion()).toHaveTextContent('Jahmyr Gibbs added to watchlist.');
+
+    await user.click(filledStar);
+    expect(screen.getByRole('button', { name: 'Add Jahmyr Gibbs to watchlist' })).toHaveAttribute(
+      'aria-pressed',
+      'false'
+    );
+    expect(getBoardLiveRegion()).toHaveTextContent('Jahmyr Gibbs removed from watchlist.');
+  });
+
+  it('the "Watched only" filter hides players not on the watchlist, independent of Available only (MVP 4.8)', async () => {
+    const user = userEvent.setup();
+    render(<Board />);
+
+    await user.click(screen.getByRole('button', { name: 'Add Bijan Robinson to watchlist' }));
+
+    act(() => {
+      useBoardStore.getState().setWatchedOnly(true);
+    });
+
+    const list = screen.getByRole('list', { name: 'Ranked players' });
+    expect(within(list).getByText('Bijan Robinson')).toBeInTheDocument();
+    expect(within(list).queryByText('Jahmyr Gibbs')).not.toBeInTheDocument();
+  });
+
+  it('shows a "watched" empty state, distinct from the others, when Watched only hides everyone matching', () => {
+    act(() => {
+      useBoardStore.getState().setWatchedOnly(true);
+    });
+
+    render(<Board />);
+
+    expect(
+      screen.getByText(/Nobody matching your filters is on your watchlist/)
+    ).toBeInTheDocument();
+  });
+
+  it('a custom tier break replaces the source tiers entirely (all-or-nothing), and the reset control restores them (MVP 4.9)', async () => {
+    const user = userEvent.setup();
+    render(<Board />);
+
+    // Under the SOURCE's own tiers, Jahmyr Gibbs (rank 1) starts the first band.
+    expect(screen.getByRole('listitem', { name: /Jahmyr Gibbs, rank 1,/ })).toHaveClass(
+      'border-t-accent'
+    );
+    expect(screen.queryByText(/Custom tiers ·/)).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Start a tier at Bijan Robinson' }));
+
+    // All-or-nothing (domain/tiers.ts resolveTierStarts): the one custom break becomes the ONLY
+    // tier start on the board — Jahmyr Gibbs loses its band start even though its own `tier`
+    // field never changed.
+    expect(screen.getByRole('listitem', { name: /Jahmyr Gibbs, rank 1,/ })).not.toHaveClass(
+      'border-t-accent'
+    );
+    expect(screen.getByRole('listitem', { name: /Bijan Robinson, rank 2,/ })).toHaveClass(
+      'border-t-accent'
+    );
+    expect(screen.getByText(/Custom tiers ·/)).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Remove tier break at Bijan Robinson' })
+    ).toHaveAttribute('aria-pressed', 'true');
+
+    await user.click(screen.getByRole('button', { name: 'Reset to source tiers' }));
+
+    expect(screen.getByRole('listitem', { name: /Jahmyr Gibbs, rank 1,/ })).toHaveClass(
+      'border-t-accent'
+    );
+    expect(screen.getByRole('listitem', { name: /Bijan Robinson, rank 2,/ })).not.toHaveClass(
+      'border-t-accent'
+    );
+    expect(screen.queryByText(/Custom tiers ·/)).not.toBeInTheDocument();
+  });
+
+  it('typing in a player note — including Space — never reorders the row or triggers dnd-kit keyboard drag (MVP 4.7)', async () => {
+    const user = userEvent.setup();
+    render(<Board />);
+
+    await user.click(screen.getByRole('button', { name: 'Add note for Bijan Robinson' }));
+    const input = screen.getByLabelText('Note for Bijan Robinson');
+
+    await user.type(input, 'hamstring, monitor Thursday');
+    expect(input).toHaveValue('hamstring, monitor Thursday');
+
+    // Still rank 2: nothing about typing (including the spaces) moved the row or lifted it into
+    // a drag.
+    expect(screen.getByRole('listitem', { name: /Bijan Robinson, rank 2,/ })).toBeInTheDocument();
+
+    await user.keyboard('{Enter}');
+
+    expect(getBoardLiveRegion()).toHaveTextContent('Note saved for Bijan Robinson.');
+    expect(screen.getByRole('button', { name: 'Edit note for Bijan Robinson' })).toHaveTextContent(
+      '✎•'
+    );
+    // Still rank 2 after commit, too.
+    expect(screen.getByRole('listitem', { name: /Bijan Robinson, rank 2,/ })).toBeInTheDocument();
+  });
+
+  it("Escape in a player's note editor cancels without saving or moving the row (MVP 4.7)", async () => {
+    const user = userEvent.setup();
+    render(<Board />);
+
+    await user.click(screen.getByRole('button', { name: 'Add note for Bijan Robinson' }));
+    await user.type(screen.getByLabelText('Note for Bijan Robinson'), 'should not be saved');
+    await user.keyboard('{Escape}');
+
+    expect(screen.getByRole('button', { name: 'Add note for Bijan Robinson' })).toHaveTextContent(
+      '✎'
+    );
+    expect(screen.getByRole('listitem', { name: /Bijan Robinson, rank 2,/ })).toBeInTheDocument();
+  });
+
+  it('clearing custom tier breaks is undoable in a single press, not once per break (Stage E)', async () => {
+    const user = userEvent.setup();
+    render(<Board />);
+
+    await user.click(screen.getByRole('button', { name: 'Start a tier at Bijan Robinson' }));
+    await user.click(screen.getByRole('button', { name: "Start a tier at Ja'Marr Chase" }));
+    expect(useBoardStore.getState().canUndo).toBe(true);
+
+    await user.click(screen.getByRole('button', { name: 'Reset to source tiers' }));
+    expect(screen.queryByText(/Custom tiers ·/)).not.toBeInTheDocument();
+
+    // One Ctrl+Z (a single history entry) restores EVERY cleared break, not just the last one.
+    act(() => {
+      useBoardStore.getState().undo();
+    });
+
+    expect(screen.getByText(/Custom tiers ·/)).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Remove tier break at Bijan Robinson' })
+    ).toHaveAttribute('aria-pressed', 'true');
+    expect(
+      screen.getByRole('button', { name: "Remove tier break at Ja'Marr Chase" })
+    ).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  describe('at a narrow (phone) width', () => {
+    beforeEach(() => {
+      setMatchMediaQuery(NARROW_QUERY, true);
+    });
+
+    it('exposes note and tier-break through a single overflow control, not directly (Stage E)', async () => {
+      const user = userEvent.setup();
+      render(<Board />);
+
+      // The wide-width controls are gone from this row entirely (a JS conditional, not a CSS
+      // hide) — see row-grid.ts's file header for why.
+      expect(
+        screen.queryByRole('button', { name: 'Add note for Bijan Robinson' })
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole('button', { name: 'Start a tier at Bijan Robinson' })
+      ).not.toBeInTheDocument();
+
+      await user.click(screen.getByRole('button', { name: 'More actions for Bijan Robinson' }));
+
+      const input = screen.getByLabelText('Note for Bijan Robinson');
+      await user.type(input, 'hamstring, monitor Thursday{Enter}');
+
+      expect(getBoardLiveRegion()).toHaveTextContent('Note saved for Bijan Robinson.');
+      expect(
+        screen.getByRole('button', { name: 'More actions for Bijan Robinson' })
+      ).toHaveTextContent('⋯•');
+
+      await user.click(screen.getByRole('button', { name: 'More actions for Bijan Robinson' }));
+      await user.click(screen.getByRole('button', { name: 'Start a tier at Bijan Robinson' }));
+
+      expect(getBoardLiveRegion()).toHaveTextContent('Tier now starts at Bijan Robinson.');
+      expect(screen.getByRole('listitem', { name: /Bijan Robinson, rank 2,/ })).toHaveClass(
+        'border-t-accent'
+      );
+    });
   });
 });
